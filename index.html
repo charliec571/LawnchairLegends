@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Lawnchair Legends | Northeast Indiana Live Cover Band</title>
+  <meta name="description" content="Lawnchair Legends – High-energy rock, pop, and brass-infused party cover band hailing from Kendallville, IN. Serving Fort Wayne, lake country, and all Northeast Indiana. Book us for festivals, bars, and private events!" />
+  <meta name="theme-color" content="#0c1017" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Lawnchair Legends | Northeast Indiana Live Cover Band" />
+  <meta property="og:description" content="Catch Lawnchair Legends live! Brass-fueled party rock, 90s alt, classic anthems & modern hits. View upcoming gigs, request songs, and book the band." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.facebook.com/profile.php?id=61585160237026" />
+  
+  <!-- Google Fonts: Bebas Neue (Retro Condensed), Yellowtail (Vintage Cursive Script), Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Yellowtail&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Facebook In-App Browser Notice (Conditional Helper) -->
+  <div id="inAppNotice" class="inapp-notice hidden">
+    <div class="inapp-notice-content">
+      <span>💡 Opened in Facebook? Tap <strong>•••</strong> &gt; <strong>Open in Browser</strong> to enable instant calendar syncing & audio background play!</span>
+      <button id="dismissNoticeBtn" aria-label="Dismiss notice">&times;</button>
+    </div>
+  </div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+      <a href="#" class="brand-logo" aria-label="Lawnchair Legends Home">
+        <div class="brand-text">
+          <span class="brand-title">LAWNCHAIR LEGENDS</span>
+          <span class="brand-tagline">Your Mom’s Favorite Cover Band!</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Primary Navigation">
+        <a href="#next-show" class="nav-link">Next Up</a>
+        <a href="#calendar" class="nav-link">Shows Calendar</a>
+        <a href="#vibe-check" class="nav-link">Band Bio</a>
+        <a href="#setlist" class="nav-link">Setlist</a>
+        <a href="#booking" class="nav-btn primary-btn">Book The Band</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="live-reel-btn" id="openSplashReelBtn" aria-label="Play 20s Live Concert Clip">
+          <span class="pulsing-dot-sm"></span>
+          <span>▶ 20s Live Reel</span>
+        </button>
+
+        <a href="https://www.facebook.com/profile.php?id=61585160237026" target="_blank" rel="noopener noreferrer" class="social-icon-btn fb-btn" aria-label="Band Facebook Page">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          <span class="desktop-only">Facebook</span>
+        </a>
+        <a href="#booking" class="mobile-book-btn">Book Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Mobile Quick Nav Bar -->
+  <nav class="mobile-quick-bar" aria-label="Mobile Navigation">
+    <a href="#next-show" class="quick-link active" data-section="next-show">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <span>Next Gig</span>
+    </a>
+    <a href="#calendar" class="quick-link" data-section="calendar">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Shows</span>
+    </a>
+    <a href="#vibe-check" class="quick-link" data-section="vibe-check">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Band Bio</span>
+    </a>
+    <a href="#setlist" class="quick-link" data-section="setlist">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span>Setlist</span>
+    </a>
+    <a href="#booking" class="quick-link book-highlight" data-section="booking">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      <span>Book</span>
+    </a>
+  </nav>
+
+  <main>
+    <!-- HERO: "NEXT UP" LIVE SHOW SPOTLIGHT -->
+    <section class="hero-section" id="next-show">
+      <div class="hero-backdrop">
+        <div class="gradient-overlay"></div>
+        <div class="stage-light light-1"></div>
+        <div class="stage-light light-2"></div>
+        <div class="stage-light light-3"></div>
+      </div>
+
+      <div class="container hero-content">
+        <!-- Official Band Artwork Banner Frame -->
+        <div class="hero-artwork-frame">
+          <img src="assets/banner.png" alt="Lawnchair Legends - Your Mom's Favorite Cover Band!" class="hero-artwork-img" />
+        </div>
+
+        <!-- Live Status Pill -->
+        <div class="live-status-badge">
+          <span class="pulsing-dot"></span>
+          <span class="badge-text">NEXT LIVE PERFORMANCE</span>
+        </div>
+
+        <h1 class="hero-gig-title" id="heroGigTitle">Bikes on the Bricks @ Electric Works</h1>
+        
+        <div class="gig-meta-banner">
+          <div class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="heroGigDate">Friday, Aug 28, 2026</span>
+          </div>
+          <div class="meta-divider">•</div>
+          <div class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="heroGigTime">7:00 PM – 9:00 PM</span>
+          </div>
+          <div class="meta-divider">•</div>
+          <div class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span id="heroGigVenue">Electric Works Campus • Fort Wayne, IN</span>
+          </div>
+        </div>
+
+        <!-- Live Countdown Widget -->
+        <div class="countdown-widget" aria-label="Countdown to next show">
+          <div class="countdown-unit">
+            <span class="count-number" id="countDays">00</span>
+            <span class="count-label">DAYS</span>
+          </div>
+          <span class="count-colon">:</span>
+          <div class="countdown-unit">
+            <span class="count-number" id="countHours">00</span>
+            <span class="count-label">HOURS</span>
+          </div>
+          <span class="count-colon">:</span>
+          <div class="countdown-unit">
+            <span class="count-number" id="countMins">00</span>
+            <span class="count-label">MINUTES</span>
+          </div>
+          <span class="count-colon">:</span>
+          <div class="countdown-unit">
+            <span class="count-number" id="countSecs">00</span>
+            <span class="count-label">SECONDS</span>
+          </div>
+        </div>
+
+        <!-- Action Conversion Buttons -->
+        <div class="hero-actions-row">
+          <a href="https://maps.apple.com/?q=Electric+Works+Fort+Wayne+IN" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="heroDirectionsBtn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            <span>Get Directions</span>
+          </a>
+
+          <!-- Add to Calendar Dropdown Button -->
+          <div class="calendar-dropdown-wrapper">
+            <button class="btn btn-secondary" id="calendarDropdownToggle" aria-haspopup="true" aria-expanded="false">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+              <span>Add to Calendar</span>
+              <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="calendar-menu hidden" id="calendarMenu">
+              <a href="#" class="calendar-menu-item" id="addGoogleCal">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12c6.627 0 12-5.373 12-12S18.627 0 12 0zm5.88 12.875h-5.005v-2.072h2.95c-.244-1.205-1.38-2.062-2.95-2.062-1.745 0-3.16 1.433-3.16 3.204s1.415 3.203 3.16 3.203c1.398 0 2.427-.803 2.76-1.92h.007l2.238 1.647C16.89 16.32 14.62 17.5 12 17.5c-3.175 0-5.75-2.542-5.75-5.679 0-3.136 2.575-5.678 5.75-5.678 3.01 0 5.258 2.128 5.485 4.887l.395 1.845z"/></svg>
+                Google Calendar
+              </a>
+              <button class="calendar-menu-item" id="downloadIcsBtn">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Apple / Outlook (.ics)
+              </button>
+            </div>
+          </div>
+
+          <button class="btn btn-outline" id="shareShowBtn" aria-label="Share show with friends">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span>Share</span>
+          </button>
+
+          <button class="btn btn-glass" id="openVenueModalBtn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span>Show Details</span>
+          </button>
+        </div>
+
+        <!-- RSVP Attendance Counter -->
+        <div class="rsvp-callout">
+          <button class="rsvp-toggle-btn" id="heroRsvpBtn">
+            <span class="rsvp-heart">❤️</span>
+            <span id="rsvpStatusText">I'm Going!</span>
+          </button>
+          <span class="rsvp-count-display" id="rsvpCountDisplay">🔥 <strong>138</strong> local fans attending</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOUR DATES & SHOW CALENDAR SECTION -->
+    <section class="section calendar-section" id="calendar">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">LIVE CONCERT SCHEDULE</div>
+          <h2 class="section-title">Upcoming Shows Schedule</h2>
+          <p class="section-subtitle">Catch Lawnchair Legends across Northeast Indiana, Fort Wayne festival stages, lake country, and community celebrations.</p>
+        </div>
+
+        <!-- Schedule Mode Switcher (Upcoming vs Past Shows) -->
+        <div class="schedule-tab-switcher" role="tablist" aria-label="Show schedule filter">
+          <button class="schedule-tab-btn active" id="tabUpcomingShows" data-view="upcoming" role="tab" aria-selected="true">
+            <span class="schedule-tab-indicator"></span>
+            <span>Upcoming Shows (3)</span>
+          </button>
+          <button class="schedule-tab-btn" id="tabPastShows" data-view="past" role="tab" aria-selected="false">
+            <span class="schedule-tab-icon">📜</span>
+            <span>Past Shows Archive (5)</span>
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-controls-row">
+          <div class="filter-pills" role="tablist">
+            <button class="filter-pill active" data-filter="all" role="tab" aria-selected="true">All Dates</button>
+            <button class="filter-pill" data-filter="fortwayne" role="tab" aria-selected="false">Fort Wayne</button>
+            <button class="filter-pill" data-filter="lakes" role="tab" aria-selected="false">Kendallville &amp; Lakes</button>
+            <button class="filter-pill" data-filter="festivals" role="tab" aria-selected="false">Festivals &amp; Fairs</button>
+          </div>
+          <div class="search-input-wrapper">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="showSearchInput" placeholder="Search venue, city..." aria-label="Search shows" />
+          </div>
+        </div>
+
+        <!-- Show Cards List Grid -->
+        <div class="shows-grid" id="showsGrid">
+          <!-- Dynamically Rendered by app.js -->
+        </div>
+
+        <!-- Booking Callout Bar -->
+        <div class="calendar-booking-banner">
+          <div class="banner-text">
+            <h3>Planning an event, festival, or lake party?</h3>
+            <p>We are currently booking spring, summer &amp; fall weekends across IN, OH, and MI.</p>
+          </div>
+          <a href="#booking" class="btn btn-primary">Check Band Availability</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BAND BIO & MEMBER SPOTLIGHT -->
+    <section class="section epk-section" id="vibe-check">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">ABOUT THE BAND</div>
+          <h2 class="section-title">Band Bio</h2>
+          <p class="section-subtitle">Proudly from Noble County, Indiana — bringing hometown talent, great energy, and a whole lot of music to every stage.</p>
+        </div>
+
+        <!-- Band Bio Card (full-width) -->
+        <div class="epk-card bio-card bio-card-full">
+          <div class="bio-badge">OFFICIAL BAND BIO</div>
+          <h3 class="bio-headline">Lawn Chair Legends</h3>
+          <p class="bio-text">
+            Formed in 2025, the <strong>Lawn Chair Legends</strong> are a hometown band with deep roots in <strong>Noble County, Indiana</strong>. Made up entirely of Noble County natives, the band members share a passion for music, community, and creating memorable experiences through live performances.
+          </p>
+          <p class="bio-text">
+            The Lawn Chair Legends feature <strong>Chris Dafforn</strong> on keys and trumpet, <strong>Mike Kugler</strong> on guitar, <strong>Adam Kugler</strong> on bass, <strong>Drew Mark</strong> on drums, <strong>Meg Rainey</strong> on vocals, <strong>Andrew Wilson</strong> on trumpet, and <strong>Evan Wilson</strong> on saxophone. Together, this talented group brings a full, dynamic sound that blends powerful vocals, a driving rhythm section, and the energy of a live horn section.
+          </p>
+          <p class="bio-text">
+            The band's music spans classic rock, country, blues, and crowd-favorite hits, delivering a mix of songs that appeal to a wide variety of audiences. Whether it's a community celebration, festival, private event, or local gathering, the Lawn Chair Legends bring the perfect combination of talent, fun, and hometown spirit.
+          </p>
+          <p class="bio-text">
+            More than just a band, the Lawn Chair Legends are a group of friends and neighbors proud to represent the community that raised them. Their goal is simple: play great music, bring people together, and create an unforgettable experience for everyone in the crowd.
+          </p>
+          <p class="bio-text bio-quote-highlight">
+            <em>"Proudly from Noble County, Indiana — the Lawn Chair Legends bring hometown talent, great energy, and a whole lot of music to every stage."</em>
+          </p>
+
+          <!-- 7-Member Lineup Grid -->
+          <div class="lineup-grid">
+            <div class="member-chip">
+              <div class="member-avatar">🎤</div>
+              <div class="member-info">
+                <div class="member-name">Meg Rainey</div>
+                <div class="member-role">Lead Vocals</div>
+              </div>
+            </div>
+
+            <div class="member-chip">
+              <div class="member-avatar">🎹 🎺</div>
+              <div class="member-info">
+                <div class="member-name">Chris Dafforn</div>
+                <div class="member-role">Keys &amp; Trumpet &amp; Vocals</div>
+              </div>
+            </div>
+
+            <div class="member-chip">
+              <div class="member-avatar">🎸</div>
+              <div class="member-info">
+                <div class="member-name">Mike Kugler</div>
+                <div class="member-role">Guitar &amp; Vocals</div>
+              </div>
+            </div>
+
+            <div class="member-chip">
+              <div class="member-avatar">🎸</div>
+              <div class="member-info">
+                <div class="member-name">Adam Kugler</div>
+                <div class="member-role">Bass &amp; Vocals</div>
+              </div>
+            </div>
+
+            <div class="member-chip">
+              <div class="member-avatar">🥁</div>
+              <div class="member-info">
+                <div class="member-name">Drew Mark</div>
+                <div class="member-role">Drums &amp; Vocals</div>
+              </div>
+            </div>
+
+            <div class="member-chip">
+              <div class="member-avatar">🎺</div>
+              <div class="member-info">
+                <div class="member-name">Andrew Wilson</div>
+                <div class="member-role">Trumpet</div>
+              </div>
+            </div>
+
+            <div class="member-chip" style="grid-column: 1 / -1;">
+              <div class="member-avatar">🎷</div>
+              <div class="member-info">
+                <div class="member-name">Evan Wilson</div>
+                <div class="member-role">Saxophone</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EPK Asset Downloads / Modals -->
+          <div class="epk-downloads-row">
+            <button class="btn btn-outline" id="openTechRiderBtn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <span>Stage Plot &amp; Tech Rider</span>
+            </button>
+
+            <button class="btn btn-glass" id="openPromoKitBtn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>Hi-Res Promo Kit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETLIST BROWSER & FAN SONG REQUESTS -->
+    <section class="section setlist-section" id="setlist">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">WHAT WE PLAY</div>
+          <h2 class="section-title">Interactive Setlist Catalog</h2>
+          <p class="section-subtitle">From arena rock anthems to blues, funk, and soulful ballads. Browse our official 32-song catalog and request your favorites for the next gig!</p>
+        </div>
+
+        <div class="setlist-container">
+          <!-- Category Filter Tabs -->
+          <div class="setlist-filters-bar">
+            <div class="setlist-pills" id="setlistFilterPills">
+              <button class="setlist-pill active" data-genre="all">All Songs (<span id="totalSongCount">0</span>)</button>
+              <button class="setlist-pill" data-genre="rock">⚡ Classic &amp; Hard Rock</button>
+              <button class="setlist-pill" data-genre="blues">🎸 Blues &amp; Roots Rock</button>
+              <button class="setlist-pill" data-genre="brass">🎺 Funk, Horns &amp; Soul</button>
+              <button class="setlist-pill" data-genre="pop">🌟 Pop &amp; Yacht Rock</button>
+            </div>
+
+            <div class="setlist-search-wrapper">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="songSearchInput" placeholder="Search song, artist, or singer (Meg, Adam...)..." aria-label="Search song list" />
+            </div>
+          </div>
+
+          <!-- Song Items List -->
+          <div class="songs-list-grid" id="songsListGrid">
+            <!-- Populated via app.js -->
+          </div>
+
+          <div class="setlist-footer-note">
+            <span>✨ Don't see your favorite tune? Use our <a href="#booking">booking inquiry form</a> to request custom event setlists!</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SMART BOOKING & LEAD CONVERSION HUB -->
+    <section class="section booking-section" id="booking">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">TALENT BUYERS &amp; VENUES</div>
+          <h2 class="section-title">Check Availability &amp; Book</h2>
+          <p class="section-subtitle">Get an instant estimate and hold a date in under 60 seconds. We reply within 24 hours.</p>
+        </div>
+
+        <div class="booking-grid">
+          <!-- Calendar Availability Overview -->
+          <div class="booking-card availability-card">
+            <div class="card-top-bar">
+              <h3 class="card-heading">Upcoming Weekend Status</h3>
+              <span class="live-dot-tag">Updated Daily</span>
+            </div>
+            
+            <p class="availability-desc">Quick look at available dates for upcoming weekend slots across Northeast Indiana:</p>
+
+            <div class="weekend-slots-list" id="weekendSlotsList">
+              <!-- Populated via app.js -->
+            </div>
+
+            <div class="availability-legend">
+              <div class="legend-item"><span class="legend-dot open"></span> Open Weekend</div>
+              <div class="legend-item"><span class="legend-dot hold"></span> Tentative Hold</div>
+              <div class="legend-item"><span class="legend-dot booked"></span> Booked Gig</div>
+            </div>
+
+            <!-- Direct Contact Card -->
+            <div class="direct-contact-card">
+              <h4>Need an Immediate Answer?</h4>
+              <p>For last-minute venue cancellations or festival openings:</p>
+              <div class="contact-links">
+                <a href="tel:2605550199" class="contact-btn">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>(260) 555-0199</span>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61585160237026" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                  <span>Facebook Messenger</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step-by-Step Smart Booking Wizard -->
+          <div class="booking-card form-card">
+            <div class="card-top-bar">
+              <h3 class="card-heading">60-Second Booking Request</h3>
+              <div class="step-indicator" id="stepIndicator">Step 1 of 3</div>
+            </div>
+
+            <form id="smartBookingForm" novalidate>
+              <!-- STEP 1: Event Type & Logistics -->
+              <div class="form-step active" id="formStep1" data-step="1">
+                <label class="form-label">What type of event are you hosting? *</label>
+                <div class="event-type-grid">
+                  <label class="type-option">
+                    <input type="radio" name="eventType" value="Bar / Brewery / Club" checked />
+                    <div class="type-card">
+                      <span class="type-icon">🍺</span>
+                      <span class="type-name">Bar / Brewery</span>
+                      <span class="type-sub">2–3 Sets</span>
+                    </div>
+                  </label>
+
+                  <label class="type-option">
+                    <input type="radio" name="eventType" value="Festival / Community Event" />
+                    <div class="type-card">
+                      <span class="type-icon">🎪</span>
+                      <span class="type-name">Festival / Fair</span>
+                      <span class="type-sub">Mainstage / Park</span>
+                    </div>
+                  </label>
+
+                  <label class="type-option">
+                    <input type="radio" name="eventType" value="Lakefront / Private Party" />
+                    <div class="type-card">
+                      <span class="type-icon">🏖️</span>
+                      <span class="type-name">Lake / Private Party</span>
+                      <span class="type-sub">Campground / Home</span>
+                    </div>
+                  </label>
+
+                  <label class="type-option">
+                    <input type="radio" name="eventType" value="Wedding / Corporate Gala" />
+                    <div class="type-card">
+                      <span class="type-icon">🥂</span>
+                      <span class="type-name">Wedding / Gala</span>
+                      <span class="type-sub">Full Service PA</span>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="form-group-row">
+                  <div class="form-group">
+                    <label for="eventDate" class="form-label">Preferred Date *</label>
+                    <input type="date" id="eventDate" class="form-input" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="eventLocation" class="form-label">City / Venue Name *</label>
+                    <input type="text" id="eventLocation" class="form-input" placeholder="e.g. Fort Wayne, Warsaw, Angola" required />
+                  </div>
+                </div>
+
+                <div class="step-buttons">
+                  <button type="button" class="btn btn-primary next-step-btn" data-next="2">
+                    <span>Continue to Sound &amp; Setup</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- STEP 2: Sound & Production Needs -->
+              <div class="form-step hidden" id="formStep2" data-step="2">
+                <div class="form-group">
+                  <label class="form-label">Stage &amp; Production Setup</label>
+                  <div class="production-options">
+                    <label class="prod-option">
+                      <input type="radio" name="soundProduction" value="Band provides full sound & lighting" checked />
+                      <div class="prod-card">
+                        <strong>Band Brings Full PA &amp; Pro Lighting</strong>
+                        <p>Complete turn-key sound system suitable for 50-600 guests, stage monitors, and dynamic LED lighting.</p>
+                      </div>
+                    </label>
+
+                    <label class="prod-option">
+                      <input type="radio" name="soundProduction" value="Venue has house PA & sound engineer" />
+                      <div class="prod-card">
+                        <strong>Venue / Festival Provides House Sound</strong>
+                        <p>We connect our stage inputs &amp; wireless mics to your house sound console &amp; sound technician.</p>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group-row">
+                  <div class="form-group">
+                    <label for="settingType" class="form-label">Setting</label>
+                    <select id="settingType" class="form-input">
+                      <option value="Outdoor Stage / Covered Pavilion">Outdoor Stage / Covered Pavilion</option>
+                      <option value="Indoor Bar / Banquet Hall">Indoor Bar / Banquet Hall</option>
+                      <option value="Tent / Lakefront Yard">Tent / Lakefront Yard</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="perfDuration" class="form-label">Performance Length</label>
+                    <select id="perfDuration" class="form-input">
+                      <option value="3 Hours (3 Sets with breaks)">3 Hours (3 x 45-50 min sets)</option>
+                      <option value="2 Hours (2 High-energy sets)">2 Hours (2 x 55 min sets)</option>
+                      <option value="4 Hours (Full Night Showcase)">4 Hours (Full Night Showcase)</option>
+                      <option value="Single 75-90 min Festival Slot">Single 75-90 min Festival Slot</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="step-buttons">
+                  <button type="button" class="btn btn-secondary prev-step-btn" data-prev="1">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    <span>Back</span>
+                  </button>
+                  <button type="button" class="btn btn-primary next-step-btn" data-next="3">
+                    <span>Contact Info &amp; Summary</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- STEP 3: Contact & Instant Quote Summary -->
+              <div class="form-step hidden" id="formStep3" data-step="3">
+                <div class="form-group-row">
+                  <div class="form-group">
+                    <label for="clientName" class="form-label">Your Name / Organization *</label>
+                    <input type="text" id="clientName" class="form-input" placeholder="e.g. John Doe / Taproom Manager" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="clientEmail" class="form-label">Email Address *</label>
+                    <input type="email" id="clientEmail" class="form-input" placeholder="name@domain.com" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="clientPhone" class="form-label">Phone Number (for SMS confirmation)</label>
+                  <input type="tel" id="clientPhone" class="form-input" placeholder="(260) 000-0000" />
+                </div>
+
+                <div class="form-group">
+                  <label for="eventNotes" class="form-label">Additional Notes or Song Requests</label>
+                  <textarea id="eventNotes" class="form-textarea" rows="2" placeholder="Tell us about your audience, specific song requests, or schedule details..."></textarea>
+                </div>
+
+                <!-- Instant Estimate Summary Card -->
+                <div class="inquiry-summary-box">
+                  <div class="summary-line">
+                    <span>Event Type:</span>
+                    <strong id="summaryEventType">Bar / Brewery</strong>
+                  </div>
+                  <div class="summary-line">
+                    <span>Estimated Package:</span>
+                    <strong class="highlight-gold" id="summaryPackage">Full Band + Complete PA Setup</strong>
+                  </div>
+                  <div class="summary-note">
+                    🔒 Submitting this inquiry holds your date request for 48 hours with zero obligation.
+                  </div>
+                </div>
+
+                <div class="step-buttons">
+                  <button type="button" class="btn btn-secondary prev-step-btn" data-prev="2">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    <span>Back</span>
+                  </button>
+                  <button type="submit" class="btn btn-primary submit-inquiry-btn" id="submitInquiryBtn">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span>Send Booking Inquiry</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand-col">
+        <div class="footer-logo">
+          <span class="brand-title">LAWNCHAIR LEGENDS</span>
+          <span class="brand-tagline">Your Mom’s Favorite Cover Band!</span>
+        </div>
+        <p class="footer-tagline">Kendallville, IN &bull; Fort Wayne &bull; Northeast Indiana</p>
+        <p class="footer-copy">&copy; 2026 Lawnchair Legends. All rights reserved.</p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Explore</h4>
+        <a href="#next-show">Next Up</a>
+        <a href="#calendar">Shows Calendar</a>
+        <a href="#vibe-check">EPK &amp; Audio</a>
+        <a href="#setlist">Setlist Catalog</a>
+        <a href="#booking">Book the Band</a>
+      </div>
+
+      <div class="footer-social-col">
+        <h4>Connect &amp; Follow</h4>
+        <div class="social-links-row">
+          <a href="https://www.facebook.com/profile.php?id=61585160237026" target="_blank" rel="noopener noreferrer" class="social-pill" aria-label="Facebook Page">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <span>Facebook Page</span>
+          </a>
+        </div>
+        <p class="fb-sync-note">Direct integration with Facebook events &amp; live show alerts.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+
+  <!-- 0. SPLASH PAGE OVERLAY (20-Second Live Audio Clip from Facebook Showcase) -->
+  <div class="splash-backdrop" id="splashScreen" role="dialog" aria-modal="true">
+    <div class="splash-card">
+      <div class="splash-top-bar">
+        <div class="splash-live-badge">
+          <span class="pulsing-dot"></span>
+          <span>LIVE REEL AUDIO PREVIEW</span>
+        </div>
+        <button class="splash-skip-btn" id="splashCloseBtn" aria-label="Skip to main site">&times;</button>
+      </div>
+
+      <!-- Featured Banner Visual -->
+      <div class="splash-artwork-container">
+        <img src="assets/banner.png" alt="Lawnchair Legends - Your Mom's Favorite Cover Band!" class="splash-artwork-img" />
+      </div>
+
+      <div class="splash-content">
+        <h2 class="splash-title">LAWNCHAIR LEGENDS</h2>
+        <p class="splash-tagline">Your Mom’s Favorite Cover Band!</p>
+        
+        <p class="splash-description">
+          Experience our live showcase featuring <strong>Meg Rainey</strong> on vocals, <strong>Chris Dafforn</strong> on keys &amp; trumpet, <strong>Mike Kugler</strong> on guitar, <strong>Adam Kugler</strong> on bass, <strong>Drew Mark</strong> on drums, <strong>Andrew Wilson</strong> on trumpet, and <strong>Evan Wilson</strong> on saxophone!
+        </p>
+
+        <!-- Live Visualizer & 20s Countdown Ring -->
+        <div class="splash-audio-zone" id="splashAudioZone">
+          <div class="splash-visualizer-box">
+            <canvas id="splashVisualizerCanvas" width="480" height="80"></canvas>
+            <div class="splash-time-tag" id="splashTimeDisplay">0:00 / 0:20</div>
+          </div>
+          <div class="splash-progress-track">
+            <div class="splash-progress-fill" id="splashProgressFill"></div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="splash-actions">
+          <button class="btn btn-primary splash-enter-btn" id="splashEnterBtn">
+            <span>Enter Band Web App &rarr;</span>
+          </button>
+        </div>
+
+        <!-- Direct Native Audio Player (Guaranteed local playback across all browsers) -->
+        <audio id="splashAudioTag" preload="auto">
+          <source src="assets/splash-audio.wav" type="audio/wav">
+          <source src="assets/splash-audio.m4a" type="audio/mp4">
+          <source src="assets/Come on.wav" type="audio/wav">
+        </audio>
+
+        <div class="splash-footer-links">
+          <a href="https://www.facebook.com/reel/1110860395449433/" target="_blank" rel="noopener noreferrer" class="splash-fb-link">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <span>Watch Full Reel on Facebook</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Venue & Show Details Modal -->
+  <div class="modal-backdrop hidden" id="venueModal" role="dialog" aria-modal="true" aria-labelledby="modalVenueTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-tag" id="modalShowType">CONCERT SPOTLIGHT</div>
+        <button class="modal-close-btn" id="closeVenueModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-poster-box" id="modalPosterBox">
+          <img id="modalPosterImg" src="assets/poster-electric-works.jpg" alt="Show Concert Poster" class="modal-poster-img" />
+        </div>
+        <h3 class="modal-title" id="modalVenueTitle">Bikes on the Bricks @ Electric Works</h3>
+        <div class="modal-meta-grid">
+          <div class="modal-meta-cell">
+            <span class="cell-label">Date &amp; Time</span>
+            <strong id="modalDateTime">Friday, Aug 28, 2026 • 7:00 PM</strong>
+          </div>
+          <div class="modal-meta-cell">
+            <span class="cell-label">Location</span>
+            <strong id="modalLocation">Electric Works, Fort Wayne, IN</strong>
+          </div>
+          <div class="modal-meta-cell">
+            <span class="cell-label">Admission / Age</span>
+            <strong id="modalAgeAdmission">Free Admission • All Ages</strong>
+          </div>
+          <div class="modal-meta-cell">
+            <span class="cell-label">Parking &amp; Amenities</span>
+            <strong id="modalAmenities">West Parking Garage • Food Hall &amp; Craft Brews</strong>
+          </div>
+        </div>
+
+        <div class="modal-description" id="modalDescription">
+          Join Lawnchair Legends on the brick plaza for a massive summer evening of motorcycle showcases, live brass-fueled party rock anthems, food trucks, and craft beer! Lawn chairs welcome.
+        </div>
+
+        <div class="modal-actions">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="modalMapBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            <span>Open in Maps</span>
+          </a>
+          <button class="btn btn-secondary" id="modalAddCalBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Add to Calendar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Tech Rider & Stage Plot Modal -->
+  <div class="modal-backdrop hidden" id="techRiderModal" role="dialog" aria-modal="true" aria-labelledby="techRiderTitle">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-header">
+        <div class="modal-tag">AUDIO ENGINEERING &amp; PRODUCTION</div>
+        <button class="modal-close-btn" id="closeTechRiderBtn" aria-label="Close tech rider">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title" id="techRiderTitle">Lawn Chair Legends – Stage Plot &amp; Technical Rider</h3>
+        <p class="modal-sub">Updated for 2026 Season • 7-Piece Live Ensemble with Full Brass Section (Trumpets &amp; Sax)</p>
+
+        <!-- Visual Stage Plot Diagram (SVG) -->
+        <div class="stage-plot-diagram">
+          <div class="stage-front-label">▲ AUDIENCE / FRONT OF HOUSE ▲</div>
+          
+          <div class="stage-visual-grid">
+            <!-- Front Stage Line -->
+            <div class="stage-pos pos-front-left">
+              <div class="pos-icon">🎸 🎤</div>
+              <span class="pos-title">Mike Kugler</span>
+              <span class="pos-detail">Guitar Amp + Vocal Mic (Stage Left)</span>
+            </div>
+
+            <div class="stage-pos pos-front-center">
+              <div class="pos-icon">⭐ 🎤</div>
+              <span class="pos-title">Meg Rainey</span>
+              <span class="pos-detail">Lead Vocals (Wireless Beta 58A + Center Monitor)</span>
+            </div>
+
+            <div class="stage-pos pos-front-right">
+              <div class="pos-icon">🎺 🎷 🎹</div>
+              <span class="pos-title">Horn Section &amp; Keys</span>
+              <span class="pos-detail">Chris Dafforn (Keys/Trumpet), Andrew Wilson (Trumpet), Evan Wilson (Sax)</span>
+            </div>
+
+            <!-- Back Stage Line -->
+            <div class="stage-pos pos-back-left">
+              <div class="pos-icon">🎸 🔌</div>
+              <span class="pos-title">Adam Kugler</span>
+              <span class="pos-detail">Bass Rig (Active DI XLR Out + Monitor)</span>
+            </div>
+
+            <div class="stage-pos pos-back-center">
+              <div class="pos-icon">🥁</div>
+              <span class="pos-title">Drew Mark</span>
+              <span class="pos-detail">Acoustic Drum Kit (Kick, Snare, Toms, Overheads)</span>
+            </div>
+
+            <div class="stage-pos pos-back-right">
+              <div class="pos-icon">⚡ 💡</div>
+              <span class="pos-title">PA &amp; Power</span>
+              <span class="pos-detail">2x Dedicated 20A Clean Audio Circuits</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Channel List -->
+        <div class="input-list-wrapper">
+          <h4>Standard 16-Channel Input Patch</h4>
+          <div class="input-table-container">
+            <table class="tech-table">
+              <thead>
+                <tr>
+                  <th>CH</th>
+                  <th>Source</th>
+                  <th>Performer</th>
+                  <th>Mic / Transducer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>Kick Drum</td><td>Drew Mark</td><td>Shure Beta 52A / Audix D6</td></tr>
+                <tr><td>2</td><td>Snare Top</td><td>Drew Mark</td><td>Shure SM57</td></tr>
+                <tr><td>3-4</td><td>Rack &amp; Floor Toms</td><td>Drew Mark</td><td>Sennheiser e604 Rim Clips</td></tr>
+                <tr><td>5-6</td><td>Overheads L/R</td><td>Drew Mark</td><td>Matched Condenser Pair</td></tr>
+                <tr><td>7</td><td>Bass Guitar</td><td>Adam Kugler</td><td>Active DI Box (Radial J48)</td></tr>
+                <tr><td>8</td><td>Electric Guitar</td><td>Mike Kugler</td><td>Sennheiser e906 / SM57</td></tr>
+                <tr><td>9-10</td><td>Keyboards L/R</td><td>Chris Dafforn</td><td>Stereo DI (Radial ProD2)</td></tr>
+                <tr><td>11</td><td>Trumpet #1</td><td>Chris Dafforn</td><td>Shure Beta 98H / Stand Mic</td></tr>
+                <tr><td>12</td><td>Trumpet #2</td><td>Andrew Wilson</td><td>Shure SM57 / Clip-on</td></tr>
+                <tr><td>13</td><td>Tenor Saxophone</td><td>Evan Wilson</td><td>Clip-on Wireless / SM57</td></tr>
+                <tr><td>14</td><td>Lead Vocals</td><td>Meg Rainey</td><td>Shure Beta 58A / Wireless</td></tr>
+                <tr><td>15</td><td>Guitar Vocal</td><td>Mike Kugler</td><td>Shure SM58</td></tr>
+                <tr><td>16</td><td>Keys Vocal</td><td>Chris Dafforn</td><td>Shure SM58</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" onclick="window.print()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            <span>Print Tech Sheet</span>
+          </button>
+          <button class="btn btn-secondary" id="closeTechRiderBtn2">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Booking Confirmation Success Modal -->
+  <div class="modal-backdrop hidden" id="bookingSuccessModal" role="dialog" aria-modal="true">
+    <div class="modal-card modal-card-sm text-center">
+      <div class="success-icon-badge">🎉</div>
+      <h3 class="modal-title">Inquiry Sent Successfully!</h3>
+      <p class="modal-sub">Thank you, <strong id="successClientName">Client</strong>!</p>
+      <p class="modal-description">
+        We have placed a temporary 48-hour hold on <strong id="successDate">your date</strong> for <strong id="successLocation">your venue</strong>. Band management will review logistics and contact you via email/phone within 24 hours.
+      </p>
+      <div class="modal-actions centered">
+        <button class="btn btn-primary" id="closeSuccessModalBtn">Back to Band Hub</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
