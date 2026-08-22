@@ -1,0 +1,26 @@
+{
+  "name": "Lawn Chair Legends",
+  "short_name": "Lawn Chair Legends",
+  "description": "Your Mom's Favorite Cover Band! High-energy rock, pop, and brass-infused party cover band from Noble County, Indiana.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0c1017",
+  "theme_color": "#0c1017",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
