@@ -28,6 +28,36 @@ class CustomHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(b'404 Not Found')
 
+    def do_POST(self):
+        if self.path == '/api/save':
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+            
+            try:
+                import json
+                # Validate JSON payload first
+                json_data = json.loads(post_data.decode('utf-8'))
+                
+                # Write to local file
+                data_file = os.path.join(DIRECTORY, 'data.json')
+                with open(data_file, 'w', encoding='utf-8') as f:
+                    json.dump(json_data, f, indent=2)
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(json.dumps({"success": True}).encode('utf-8'))
+            except Exception as e:
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(json.dumps({"success": False, "error": str(e)}).encode('utf-8'))
+        else:
+            self.send_response(404)
+            self.end_headers()
+
     def log_message(self, format, *args):
         pass
 

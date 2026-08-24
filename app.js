@@ -771,6 +771,7 @@
     }
 
     renderShows();
+    refreshCalendarView = renderShows;
   }
 
   function formatTagLabel(tag) {
@@ -1080,8 +1081,6 @@
     const searchInput = document.getElementById('songSearchInput');
     const totalCountEl = document.getElementById('totalSongCount');
 
-    if (totalCountEl) totalCountEl.textContent = SETLIST_DATA.length;
-
     let activeGenre = 'all';
     let searchQuery = '';
 
@@ -1089,6 +1088,7 @@
     const votes = JSON.parse(localStorage.getItem('lawnchair_song_votes') || '{}');
 
     function renderSetlist() {
+      if (totalCountEl) totalCountEl.textContent = SETLIST_DATA.length;
       if (!listGrid) return;
       listGrid.innerHTML = '';
 
@@ -1163,6 +1163,7 @@
     }
 
     renderSetlist();
+    refreshSetlistView = renderSetlist;
   }
 
   // --- AVAILABILITY LIST ---
@@ -1635,6 +1636,648 @@
 
     // Auto-start audio immediately when the splash screen loads
     setTimeout(startSplashAudio, 250);
+  }
+
+  // --- STEALTH ADMIN DASHBOARD MANAGER ---
+  function initStealthAdmin() {
+    const password = 'lcl2026';
+    const logos = document.querySelectorAll('.brand-logo');
+    
+    // Auth Modal Elements
+    const authModal = document.getElementById('adminAuthModal');
+    const authForm = document.getElementById('adminAuthForm');
+    const passInput = document.getElementById('adminPasswordInput');
+    const authError = document.getElementById('adminAuthError');
+    const closeAuthBtn = document.getElementById('closeAdminAuthBtn');
+
+    // Dashboard Modal Elements
+    const dashModal = document.getElementById('adminPanelModal');
+    const closeDashBtn = document.getElementById('closeAdminDashboardBtn');
+    const saveModeBadge = document.getElementById('saveModeBadge');
+    const settingsSaveModeText = document.getElementById('settingsSaveModeText');
+    const githubSettingsArea = document.getElementById('githubSettingsArea');
+    const publishChangesBtn = document.getElementById('publishChangesBtn');
+    
+    // Git inputs
+    const gitTokenInput = document.getElementById('gitTokenInput');
+    const gitRepoInput = document.getElementById('gitRepoInput');
+    const gitBranchSelect = document.getElementById('gitBranchSelect');
+    
+    // Tabs
+    const tabBtns = document.querySelectorAll('.admin-tab-btn');
+    const tabContents = document.querySelectorAll('.admin-tab-content');
+    
+    // Lists
+    const showsList = document.getElementById('adminShowsList');
+    const pastShowsList = document.getElementById('adminPastShowsList');
+    const setlistList = document.getElementById('adminSetlistList');
+    const setlistSearch = document.getElementById('adminSetlistSearch');
+    
+    // Editor triggers
+    const addNewShowBtn = document.getElementById('addNewShowBtn');
+    const addNewPastShowBtn = document.getElementById('addNewPastShowBtn');
+    const addNewSongBtn = document.getElementById('addNewSongBtn');
+
+    // Form Modals
+    const showFormModal = document.getElementById('showFormModal');
+    const showForm = document.getElementById('showEditorForm');
+    const closeShowFormBtn = document.getElementById('closeShowFormBtn');
+    
+    const songFormModal = document.getElementById('songFormModal');
+    const songForm = document.getElementById('songEditorForm');
+    const closeSongFormBtn = document.getElementById('closeSongFormBtn');
+
+    // Environment Check
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+    // 1. Hook Logo Secret Triggers
+    logos.forEach(logo => {
+      // Prevent default right-click context menu and launch auth
+      logo.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        openAuth();
+      });
+
+      // Handle touch/mouse long press hold for 2 seconds
+      let timer;
+      const startHold = (e) => {
+        timer = setTimeout(() => {
+          openAuth();
+        }, 2000);
+      };
+      const endHold = () => {
+        clearTimeout(timer);
+      };
+
+      logo.addEventListener('mousedown', startHold);
+      logo.addEventListener('touchstart', startHold, { passive: true });
+      logo.addEventListener('mouseup', endHold);
+      logo.addEventListener('mouseleave', endHold);
+      logo.addEventListener('touchend', endHold);
+      logo.addEventListener('touchcancel', endHold);
+    });
+
+    // 2. Open Auth Modal
+    function openAuth() {
+      if (authModal) {
+        passInput.value = '';
+        authError.classList.add('hidden');
+        authModal.classList.remove('hidden');
+        passInput.focus();
+      }
+    }
+
+    // 3. Auth Form Handlers
+    if (authForm) {
+      authForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (passInput.value === password) {
+          authModal.classList.add('hidden');
+          openDashboard();
+        } else {
+          authError.classList.remove('hidden');
+          passInput.focus();
+          passInput.select();
+        }
+      });
+    }
+
+    if (closeAuthBtn) {
+      closeAuthBtn.addEventListener('click', () => {
+        authModal.classList.add('hidden');
+      });
+    }
+
+    // 4. Open Dashboard
+    function openDashboard() {
+      if (!dashModal) return;
+      dashModal.classList.remove('hidden');
+      
+      // Update Environment Info
+      if (isLocal) {
+        saveModeBadge.textContent = 'Local Mode';
+        saveModeBadge.style.background = 'rgba(16, 185, 129, 0.1)';
+        saveModeBadge.style.color = '#10b981';
+        settingsSaveModeText.innerHTML = '⚙️ <strong>Local Development Mode</strong>: Saves directly to your local file system (<code>data.json</code>).';
+        githubSettingsArea.classList.add('hidden');
+      } else {
+        saveModeBadge.textContent = 'GitHub Pages Mode';
+        saveModeBadge.style.background = 'rgba(59, 130, 246, 0.1)';
+        saveModeBadge.style.color = '#3b82f6';
+        settingsSaveModeText.innerHTML = '🌐 <strong>Production Live Mode</strong>: Commits changes directly to your GitHub repository using a personal access token.';
+        githubSettingsArea.classList.remove('hidden');
+        
+        // Prefill GitHub inputs from localStorage
+        gitTokenInput.value = localStorage.getItem('lcl_git_token') || '';
+        gitRepoInput.value = localStorage.getItem('lcl_git_repo') || 'charliec571/LawnchairLegends';
+        gitBranchSelect.value = localStorage.getItem('lcl_git_branch') || 'dev';
+      }
+
+      // Render Admin Lists
+      renderAdminShowsList();
+      renderAdminPastShowsList();
+      renderAdminSetlistList();
+    }
+
+    if (closeDashBtn) {
+      closeDashBtn.addEventListener('click', () => {
+        dashModal.classList.add('hidden');
+      });
+    }
+
+    // Tab Switching
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const activeTab = btn.dataset.tab;
+        tabContents.forEach(content => {
+          if (content.id === `adminTab${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`) {
+            content.classList.remove('hidden');
+          } else {
+            content.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Local Storage Saving for GitHub config
+    [gitTokenInput, gitRepoInput, gitBranchSelect].forEach(input => {
+      if (input) {
+        input.addEventListener('change', () => {
+          localStorage.setItem('lcl_git_token', gitTokenInput.value.trim());
+          localStorage.setItem('lcl_git_repo', gitRepoInput.value.trim());
+          localStorage.setItem('lcl_git_branch', gitBranchSelect.value);
+        });
+      }
+    });
+
+    // 5. Render Admin Gigs
+    function renderAdminShowsList() {
+      if (!showsList) return;
+      showsList.innerHTML = '';
+      
+      SHOWS_DATA.forEach(show => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="font-weight:600; color:var(--accent-gold); white-space:nowrap;">${show.dateMonth} ${show.dateDay}</td>
+          <td>
+            <div style="font-weight:600; color:var(--text-parchment);">${show.title}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${show.venue}</div>
+          </td>
+          <td><span style="font-size:0.75rem; background:rgba(246,238,219,0.04); border:1px solid var(--border-subtle); padding:0.15rem 0.35rem; border-radius:3px;">${show.region}</span></td>
+          <td style="text-align:right; white-space:nowrap;">
+            <button class="admin-action-btn edit" data-id="${show.id}" title="Edit Show Details">✏️ Edit</button>
+            <button class="admin-action-btn archive" data-id="${show.id}" title="Move to Past Archive">📦 Archive</button>
+            <button class="admin-action-btn delete" data-id="${show.id}" title="Delete Show">❌ Delete</button>
+          </td>
+        `;
+
+        row.querySelector('.edit').addEventListener('click', () => openShowEditor(show, 'upcoming'));
+        row.querySelector('.archive').addEventListener('click', () => archiveUpcomingShow(show.id));
+        row.querySelector('.delete').addEventListener('click', () => deleteShow(show.id, 'upcoming'));
+        
+        showsList.appendChild(row);
+      });
+    }
+
+    function renderAdminPastShowsList() {
+      if (!pastShowsList) return;
+      pastShowsList.innerHTML = '';
+      
+      PAST_SHOWS_DATA.forEach(show => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="font-weight:600; color:var(--text-secondary); white-space:nowrap;">${show.dateMonth} ${show.dateDay}</td>
+          <td>
+            <div style="font-weight:600; color:var(--text-muted);">${show.title}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${show.venue}</div>
+          </td>
+          <td style="text-align:right; white-space:nowrap;">
+            <button class="admin-action-btn edit" data-id="${show.id}" title="Edit Show Details">✏️ Edit</button>
+            <button class="admin-action-btn delete" data-id="${show.id}" title="Delete Show">❌ Delete</button>
+          </td>
+        `;
+
+        row.querySelector('.edit').addEventListener('click', () => openShowEditor(show, 'past'));
+        row.querySelector('.delete').addEventListener('click', () => deleteShow(show.id, 'past'));
+        
+        pastShowsList.appendChild(row);
+      });
+    }
+
+    function renderAdminSetlistList() {
+      if (!setlistList) return;
+      setlistList.innerHTML = '';
+      
+      const query = setlistSearch.value.trim().toLowerCase();
+      const filtered = SETLIST_DATA.filter(song => {
+        return !query || 
+          song.title.toLowerCase().includes(query) || 
+          song.artist.toLowerCase().includes(query) ||
+          song.sangBy.toLowerCase().includes(query);
+      });
+
+      filtered.forEach((song, index) => {
+        // Find index of this song in global SETLIST_DATA
+        const originalIndex = SETLIST_DATA.indexOf(song);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="font-weight:600; color:var(--text-parchment);">${song.title}</td>
+          <td>${song.artist}</td>
+          <td style="color:var(--accent-teal-light); font-weight:500;">${song.sangBy}</td>
+          <td><span style="font-size:0.75rem; background:rgba(246,238,219,0.04); border:1px solid var(--border-subtle); padding:0.15rem 0.35rem; border-radius:3px;">${song.category}</span></td>
+          <td style="text-align:right; white-space:nowrap;">
+            <button class="admin-action-btn edit" title="Edit Song Details">✏️ Edit</button>
+            <button class="admin-action-btn delete" title="Delete Song">❌ Delete</button>
+          </td>
+        `;
+
+        row.querySelector('.edit').addEventListener('click', () => openSongEditor(song, originalIndex));
+        row.querySelector('.delete').addEventListener('click', () => deleteSong(originalIndex));
+        
+        setlistList.appendChild(row);
+      });
+    }
+
+    if (setlistSearch) {
+      setlistSearch.addEventListener('input', renderAdminSetlistList);
+    }
+
+    // 6. Show Editor Modal Logic
+    function openShowEditor(show = null, type = 'upcoming') {
+      if (!showFormModal) return;
+      
+      document.getElementById('showFormType').value = type;
+      const titleInput = document.getElementById('showFormTitleInput');
+      const venueInput = document.getElementById('showFormVenue');
+      const regionSelect = document.getElementById('showFormRegion');
+      const addressInput = document.getElementById('showFormAddress');
+      const dateStrInput = document.getElementById('showFormDateStr');
+      const monthStrInput = document.getElementById('showFormMonthStr');
+      const dayStrInput = document.getElementById('showFormDayStr');
+      const timeInput = document.getElementById('showFormTime');
+      const admissionInput = document.getElementById('showFormAdmission');
+      const descInput = document.getElementById('showFormDescription');
+      
+      // Upcoming specific fields
+      const yearInput = document.getElementById('showFormYear');
+      const monthIntInput = document.getElementById('showFormMonthInt');
+      const dayIntInput = document.getElementById('showFormDayInt');
+      const parkingInput = document.getElementById('showFormParking');
+      const amenitiesInput = document.getElementById('showFormAmenities');
+      const posterInput = document.getElementById('showFormPoster');
+      const mapQueryInput = document.getElementById('showFormMapQuery');
+
+      const upcomingFields = document.getElementById('upcomingDateFields');
+      const upcomingDetails = document.getElementById('upcomingDetailsFields');
+
+      if (type === 'past') {
+        upcomingFields.style.display = 'none';
+        upcomingDetails.style.display = 'none';
+      } else {
+        upcomingFields.style.display = 'grid';
+        upcomingDetails.style.display = 'block';
+      }
+
+      if (show) {
+        document.getElementById('showFormTitle').textContent = '✏️ Edit Show';
+        document.getElementById('showFormId').value = show.id;
+        
+        titleInput.value = show.title || '';
+        venueInput.value = show.venue || '';
+        regionSelect.value = show.region || 'lakes';
+        addressInput.value = show.address || '';
+        dateStrInput.value = show.dateStr || '';
+        monthStrInput.value = show.dateMonth || '';
+        dayStrInput.value = show.dateDay || '';
+        timeInput.value = show.time || '';
+        admissionInput.value = show.admission || '';
+        descInput.value = show.description || '';
+        
+        if (type === 'upcoming') {
+          yearInput.value = show.year || 2026;
+          monthIntInput.value = (show.month !== undefined) ? (show.month + 1) : 8;
+          dayIntInput.value = show.day || 1;
+          parkingInput.value = show.parking || '';
+          amenitiesInput.value = show.amenities || '';
+          posterInput.value = show.poster || '';
+          mapQueryInput.value = show.mapQuery || '';
+        }
+      } else {
+        document.getElementById('showFormTitle').textContent = '➕ Add New Show';
+        document.getElementById('showFormId').value = '';
+        showForm.reset();
+        
+        // set default values
+        yearInput.value = 2026;
+        monthIntInput.value = 8;
+        dayIntInput.value = 1;
+        regionSelect.value = 'lakes';
+        posterInput.value = 'assets/banner.png';
+      }
+
+      showFormModal.classList.remove('hidden');
+    }
+
+    if (closeShowFormBtn) {
+      closeShowFormBtn.addEventListener('click', () => {
+        showFormModal.classList.add('hidden');
+      });
+    }
+
+    if (showForm) {
+      showForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const id = document.getElementById('showFormId').value;
+        const type = document.getElementById('showFormType').value;
+
+        const showObj = {
+          id: id || ((type === 'upcoming' ? 'show-' : 'past-show-') + Date.now()),
+          title: document.getElementById('showFormTitleInput').value.trim(),
+          venue: document.getElementById('showFormVenue').value.trim(),
+          address: document.getElementById('showFormAddress').value.trim(),
+          region: document.getElementById('showFormRegion').value,
+          dateStr: document.getElementById('showFormDateStr').value.trim(),
+          dateMonth: document.getElementById('showFormMonthStr').value.trim().toUpperCase(),
+          dateDay: document.getElementById('showFormDayStr').value.trim(),
+          time: document.getElementById('showFormTime').value.trim(),
+          admission: document.getElementById('showFormAdmission').value.trim(),
+          description: document.getElementById('showFormDescription').value.trim()
+        };
+
+        if (type === 'upcoming') {
+          showObj.year = parseInt(document.getElementById('showFormYear').value) || 2026;
+          showObj.month = (parseInt(document.getElementById('showFormMonthInt').value) || 1) - 1;
+          showObj.day = parseInt(document.getElementById('showFormDayInt').value) || 1;
+          showObj.parking = document.getElementById('showFormParking').value.trim();
+          showObj.amenities = document.getElementById('showFormAmenities').value.trim();
+          showObj.poster = document.getElementById('showFormPoster').value.trim() || 'assets/banner.png';
+          showObj.tags = ['featured', 'free', 'all-ages', 'outdoor']; // default filters
+          showObj.mapQuery = document.getElementById('showFormMapQuery').value.trim() || encodeURIComponent(showObj.venue + ' ' + showObj.address);
+          
+          // Generate calendar variables
+          const yearPadded = showObj.year;
+          const monthPadded = String(showObj.month + 1).padStart(2, '0');
+          const dayPadded = String(showObj.day).padStart(2, '0');
+          showObj.dtStart = `${yearPadded}${monthPadded}${dayPadded}T190000`;
+          showObj.dtEnd = `${yearPadded}${monthPadded}${dayPadded}T220000`;
+          showObj.startIso = `${yearPadded}-${monthPadded}-${dayPadded}T19:00:00`;
+          showObj.endIso = `${yearPadded}-${monthPadded}-${dayPadded}T22:00:00`;
+
+          if (id) {
+            const index = SHOWS_DATA.findIndex(s => s.id === id);
+            if (index !== -1) SHOWS_DATA[index] = showObj;
+          } else {
+            SHOWS_DATA.push(showObj);
+          }
+          
+          // Keep shows sorted by date
+          SHOWS_DATA.sort((a, b) => {
+            const dateA = new Date(a.year, a.month, a.day);
+            const dateB = new Date(b.year, b.month, b.day);
+            return dateA - dateB;
+          });
+        } else {
+          showObj.tags = ['past'];
+          showObj.poster = document.getElementById('showFormPoster').value.trim() || 'assets/banner.png';
+          showObj.mapQuery = encodeURIComponent(showObj.venue + ' ' + showObj.address);
+          if (id) {
+            const index = PAST_SHOWS_DATA.findIndex(s => s.id === id);
+            if (index !== -1) PAST_SHOWS_DATA[index] = showObj;
+          } else {
+            PAST_SHOWS_DATA.unshift(showObj);
+          }
+        }
+
+        showFormModal.classList.add('hidden');
+        renderAdminShowsList();
+        renderAdminPastShowsList();
+        showToast("✓ Show updated in local list!");
+      });
+    }
+
+    if (addNewShowBtn) {
+      addNewShowBtn.addEventListener('click', () => openShowEditor(null, 'upcoming'));
+    }
+
+    if (addNewPastShowBtn) {
+      addNewPastShowBtn.addEventListener('click', () => openShowEditor(null, 'past'));
+    }
+
+    // 7. Song Editor Modal Logic
+    function openSongEditor(song = null, index = null) {
+      if (!songFormModal) return;
+
+      const titleInput = document.getElementById('songFormTitleInput');
+      const artistInput = document.getElementById('songFormArtist');
+      const sangByInput = document.getElementById('songFormSangBy');
+      const categorySelect = document.getElementById('songFormCategory');
+      const genreInput = document.getElementById('songFormGenre');
+
+      if (song) {
+        document.getElementById('songFormTitle').textContent = '✏️ Edit Song';
+        document.getElementById('songFormIndex').value = index;
+        
+        titleInput.value = song.title || '';
+        artistInput.value = song.artist || '';
+        sangByInput.value = song.sangBy || '';
+        categorySelect.value = song.category || 'rock';
+        genreInput.value = song.genre || '';
+      } else {
+        document.getElementById('songFormTitle').textContent = '➕ Add New Song';
+        document.getElementById('songFormIndex').value = '';
+        songForm.reset();
+        categorySelect.value = 'rock';
+      }
+
+      songFormModal.classList.remove('hidden');
+    }
+
+    if (closeSongFormBtn) {
+      closeSongFormBtn.addEventListener('click', () => {
+        songFormModal.classList.add('hidden');
+      });
+    }
+
+    if (songForm) {
+      songForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const indexStr = document.getElementById('songFormIndex').value;
+        const songObj = {
+          title: document.getElementById('songFormTitleInput').value.trim(),
+          artist: document.getElementById('songFormArtist').value.trim(),
+          sangBy: document.getElementById('songFormSangBy').value.trim(),
+          category: document.getElementById('songFormCategory').value,
+          genre: document.getElementById('songFormGenre').value.trim()
+        };
+
+        if (indexStr !== '') {
+          const index = parseInt(indexStr);
+          SETLIST_DATA[index] = songObj;
+        } else {
+          SETLIST_DATA.push(songObj);
+        }
+
+        songFormModal.classList.add('hidden');
+        renderAdminSetlistList();
+        showToast("✓ Setlist updated in local list!");
+      });
+    }
+
+    if (addNewSongBtn) {
+      addNewSongBtn.addEventListener('click', () => openSongEditor(null));
+    }
+
+    // 8. Delete / Archive Actions
+    function deleteShow(id, type) {
+      if (!confirm(`Are you sure you want to delete this show from the ${type} schedule?`)) return;
+      
+      if (type === 'upcoming') {
+        SHOWS_DATA = SHOWS_DATA.filter(s => s.id !== id);
+        renderAdminShowsList();
+      } else {
+        PAST_SHOWS_DATA = PAST_SHOWS_DATA.filter(s => s.id !== id);
+        renderAdminPastShowsList();
+      }
+      showToast("Show deleted locally.");
+    }
+
+    function deleteSong(index) {
+      if (!confirm(`Are you sure you want to delete "${SETLIST_DATA[index].title}" from the setlist?`)) return;
+      SETLIST_DATA.splice(index, 1);
+      renderAdminSetlistList();
+      showToast("Song deleted locally.");
+    }
+
+    function archiveUpcomingShow(id) {
+      const show = SHOWS_DATA.find(s => s.id === id);
+      if (!show) return;
+
+      if (!confirm(`Move "${show.title}" to the Past Shows Archive?`)) return;
+
+      // Filter from upcoming
+      SHOWS_DATA = SHOWS_DATA.filter(s => s.id !== id);
+      
+      // Create past show object
+      const pastShow = {
+        id: 'past-' + show.id,
+        title: show.title,
+        venue: show.venue,
+        address: show.address,
+        region: show.region,
+        dateStr: show.dateStr,
+        dateMonth: show.dateMonth,
+        dateDay: show.dateDay,
+        year: show.year,
+        time: show.time,
+        type: show.type,
+        admission: show.admission,
+        description: show.description,
+        poster: show.poster.replace('poster-', 'past-show-'),
+        tags: ['past', 'outdoor'],
+        mapQuery: show.mapQuery
+      };
+
+      // Unshift to past archive
+      PAST_SHOWS_DATA.unshift(pastShow);
+      
+      renderAdminShowsList();
+      renderAdminPastShowsList();
+      showToast("Show archived locally!");
+    }
+
+    // 9. Save and Push Changes Logic
+    if (publishChangesBtn) {
+      publishChangesBtn.addEventListener('click', saveAllChanges);
+    }
+
+    async function saveAllChanges() {
+      const payload = {
+        shows: SHOWS_DATA,
+        pastShows: PAST_SHOWS_DATA,
+        setlist: SETLIST_DATA
+      };
+
+      publishChangesBtn.disabled = true;
+      const originalText = publishChangesBtn.innerHTML;
+      publishChangesBtn.innerHTML = '<span>⚡ Saving...</span>';
+
+      try {
+        if (isLocal) {
+          // --- Local POST to server.py ---
+          const res = await fetch('/api/save', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+          
+          if (!res.ok) throw new Error("Local saving failed.");
+          const responseData = await res.json();
+          if (!responseData.success) throw new Error(responseData.error);
+
+          showToast("💾 Changes written to data.json locally!");
+        } else {
+          // --- GitHub Pages API Push ---
+          const token = gitTokenInput.value.trim();
+          const repo = gitRepoInput.value.trim();
+          const branch = gitBranchSelect.value;
+
+          if (!token || !repo) {
+            throw new Error("Missing GitHub PAT Token or Repository settings.");
+          }
+
+          // Step A: Fetch current data.json SHA
+          const url = `https://api.github.com/repos/${repo}/contents/data.json?ref=${branch}`;
+          const getRes = await fetch(url, {
+            headers: { 'Authorization': `token ${token}` }
+          });
+
+          if (!getRes.ok) throw new Error(`Could not locate data.json on ${branch} branch.`);
+          const fileMeta = await getRes.json();
+          const sha = fileMeta.sha;
+
+          // Step B: PUT update
+          const putRes = await fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `token ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: "chore: update shows and setlist via Band Dashboard",
+              content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))),
+              sha: sha,
+              branch: branch
+            })
+          });
+
+          if (!putRes.ok) throw new Error("GitHub API push commit failed.");
+          showToast("🚀 Changes committed to GitHub! Site will update in ~1 min.");
+        }
+
+        // --- DYNAMIC LIVE PAGE REFRESH ---
+        if (refreshCalendarView) refreshCalendarView();
+        if (refreshSetlistView) refreshSetlistView();
+        
+        // Re-run countdown for next show in hero
+        if (SHOWS_DATA.length > 0) {
+          initHeroCountdown();
+        }
+
+      } catch (err) {
+        console.error(err);
+        alert(`Error saving changes: ${err.message}`);
+      } finally {
+        publishChangesBtn.disabled = false;
+        publishChangesBtn.innerHTML = originalText;
+      }
+    }
   }
 
   // --- TOAST NOTIFICATIONS ---

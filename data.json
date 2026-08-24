@@ -1,0 +1,403 @@
+{
+  "shows": [
+    {
+      "id": "show-1",
+      "title": "Bikes on the Bricks @ Electric Works",
+      "venue": "Electric Works Campus",
+      "address": "1690 Broadway, Fort Wayne, IN 46802",
+      "region": "fortwayne",
+      "dateStr": "Friday, Aug 28, 2026",
+      "dateMonth": "AUG",
+      "dateDay": "28",
+      "year": 2026,
+      "month": 7,
+      "day": 28,
+      "time": "7:00 PM – 9:00 PM",
+      "type": "Motorcycle Showcase & Outdoor Stage",
+      "admission": "Free Admission • All Ages",
+      "parking": "Electric Works West Parking Garage & Surface Lots",
+      "amenities": "Union Street Market Food Hall, Chapman's Brewing craft beer, artisan food trucks, custom bike showcase.",
+      "description": "Join Lawnchair Legends on the brick plaza for Bikes on the Bricks at Electric Works in Fort Wayne! An electric evening with motorcycle showcases, live brass-fueled rock hits, food trucks, and craft beer. Bring your lawn chairs!",
+      "poster": "assets/poster-electric-works.jpg",
+      "tags": ["featured", "free", "all-ages", "outdoor"],
+      "isNextUp": true,
+      "dtStart": "20260828T190000",
+      "dtEnd": "20260828T210000",
+      "startIso": "20260828T230000Z",
+      "endIso": "20260829T010000Z",
+      "mapQuery": "Electric+Works+1690+Broadway+Fort+Wayne+IN+46802"
+    },
+    {
+      "id": "show-2",
+      "title": "Ligonier Marshmallow Festival",
+      "venue": "Festival Main Stage",
+      "address": "Main St & Cavin St, Ligonier, IN 46767",
+      "region": "festivals",
+      "dateStr": "Sunday, Sept. 6, 2026",
+      "dateMonth": "SEP",
+      "dateDay": "06",
+      "year": 2026,
+      "month": 8,
+      "day": 6,
+      "time": "1:30 PM – 3:00 PM",
+      "type": "Annual Community Festival Main Stage",
+      "admission": "Free Admission • Family Friendly",
+      "parking": "Downtown Ligonier Public Parking & Street",
+      "amenities": "Marshmallow bake-off & games, carnival rides, craft vendors, festival food trucks, lawn chair seating area.",
+      "description": "Headline afternoon concert at the famous Ligonier Marshmallow Festival! Fold out your lawn chairs on the grass and enjoy an energetic 90-minute blast of rock classics, horn anthems, and family festival fun.",
+      "poster": "assets/poster-marshmallow-fest.jpg",
+      "tags": ["featured", "free", "all-ages", "outdoor"],
+      "isNextUp": false,
+      "dtStart": "20260906T133000",
+      "dtEnd": "20260906T150000",
+      "startIso": "20260906T173000Z",
+      "endIso": "20260906T190000Z",
+      "mapQuery": "Ligonier+Marshmallow+Festival+Ligonier+IN+46767"
+    },
+    {
+      "id": "show-3",
+      "title": "Lawnchair Legends Live in Concert",
+      "venue": "A.M. Strauss Theater inside the CLC",
+      "address": "401 E Diamond St, Kendallville, IN 46755",
+      "region": "lakes",
+      "dateStr": "Saturday, Sept. 26, 2026",
+      "dateMonth": "SEP",
+      "dateDay": "26",
+      "year": 2026,
+      "month": 8,
+      "day": 26,
+      "time": "7:00 PM – 10:00 PM",
+      "type": "Historic Theater Concert Experience",
+      "admission": "Reserved Seating & General Admission",
+      "parking": "Community Learning Center (CLC) Campus Parking Lot",
+      "amenities": "Acoustically tuned historic auditorium, theater seating, concessions & refreshments, state-of-the-art concert lighting.",
+      "description": "A special 3-hour psychedelic rock spectacular inside the historic A.M. Strauss Theater at the Community Learning Center (CLC) in Kendallville! Full brass section, timeless rock anthems, and an unforgettable theater concert experience.",
+      "poster": "assets/poster-am-strauss.jpg",
+      "tags": ["featured", "indoor", "all-ages"],
+      "isNextUp": false,
+      "dtStart": "20260926T190000",
+      "dtEnd": "20260926T220000",
+      "startIso": "20260926T230000Z",
+      "endIso": "20260927T020000Z",
+      "mapQuery": "Community+Learning+Center+401+E+Diamond+St+Kendallville+IN+46755"
+    }
+  ],
+  "pastShows": [
+    {
+      "id": "past-show-1",
+      "title": "Bikes on the Bricks @ Electric Works",
+      "venue": "Electric Works Campus",
+      "address": "1690 Broadway, Fort Wayne, IN 46802",
+      "region": "fortwayne",
+      "dateStr": "Friday, July 31, 2026",
+      "dateMonth": "JUL",
+      "dateDay": "31",
+      "year": 2026,
+      "time": "7:00 PM – 9:00 PM",
+      "type": "Motorcycle Showcase & Outdoor Stage",
+      "admission": "Free Admission • All Ages",
+      "description": "Massive summer evening on the brick plaza at Electric Works with custom motorcycle showcases, food trucks, craft beer, and roaring live horn rock anthems!",
+      "poster": "assets/past-show-july-31-electric-works.jpg",
+      "tags": ["past", "outdoor", "free", "all-ages"],
+      "mapQuery": "Electric+Works+1690+Broadway+Fort+Wayne+IN+46802"
+    },
+    {
+      "id": "past-show-2",
+      "title": "Live at Sylvan Cellars",
+      "venue": "Sylvan Cellars Event Bar & Winery",
+      "address": "2725 E Northport Rd, Rome City, IN 46784",
+      "region": "lakes",
+      "dateStr": "Friday, June 5, 2026",
+      "dateMonth": "JUN",
+      "dateDay": "05",
+      "year": 2026,
+      "time": "7:00 PM – 10:00 PM",
+      "type": "Winery & Rustic Barn Concert",
+      "admission": "Free Entry • 21+ Welcome",
+      "description": "Lawnchair Legends rocked the scenic lawn and historic timber barn at Sylvan Cellars in Rome City with lake country vibes, signature wine, and dance floor classics.",
+      "poster": "assets/past-show-june-5-sylvan-cellars.jpg",
+      "tags": ["past", "outdoor", "lakefront"],
+      "mapQuery": "Sylvan+Cellars+Rome+City+IN"
+    },
+    {
+      "id": "past-show-3",
+      "title": "Great Lakes Watercross Jet Ski Race Concert",
+      "venue": "Bixler Lake Park",
+      "address": "Diamond & Park Ave, Kendallville, IN 46755",
+      "region": "lakes",
+      "dateStr": "Saturday, May 30, 2026",
+      "dateMonth": "MAY",
+      "dateDay": "30",
+      "year": 2026,
+      "time": "5:00 PM – 8:00 PM",
+      "type": "Lakefront Jet Ski Festival",
+      "admission": "Free Admission • Family Friendly",
+      "description": "Post-race sunset concert immediately following the Great Lakes Watercross national jet ski races on the shores of Bixler Lake in Kendallville.",
+      "poster": "assets/past-show-may-30-bixler-lake.jpg",
+      "tags": ["past", "lakefront", "free", "outdoor"],
+      "mapQuery": "Bixler+Lake+Park+Kendallville+IN"
+    },
+    {
+      "id": "past-show-4",
+      "title": "Spring Showcase @ Elks Lodge",
+      "venue": "Kendallville Elks Lodge #1194",
+      "address": "120 Weston Ave, Kendallville, IN 46755",
+      "region": "lakes",
+      "dateStr": "Saturday, May 2, 2026",
+      "dateMonth": "MAY",
+      "dateDay": "02",
+      "year": 2026,
+      "time": "8:00 PM – 11:00 PM",
+      "type": "Hometown Club Party",
+      "admission": "Members & Guests Welcome",
+      "description": "Spring weekend party at the Kendallville Elks Lodge featuring high-energy sets of horn-fueled party hits, classic rock, and 90s sing-alongs.",
+      "poster": "assets/past-show-may-2-elks.jpg",
+      "tags": ["past", "indoor", "featured"],
+      "mapQuery": "120+Weston+Ave+Kendallville+IN+46755"
+    },
+    {
+      "id": "past-show-5",
+      "title": "Winter Dance Party @ Elks Lodge",
+      "venue": "Kendallville Elks Lodge #1194",
+      "address": "120 Weston Ave, Kendallville, IN 46755",
+      "region": "lakes",
+      "dateStr": "Friday, February 20, 2026",
+      "dateMonth": "FEB",
+      "dateDay": "20",
+      "year": 2026,
+      "time": "8:00 PM – 11:00 PM",
+      "type": "Winter Dance Showcase",
+      "admission": "Members & Guests Welcome",
+      "description": "Packed winter party warming up Kendallville with 3 full sets of live music, horn solos, and rock classics at the Elks Lodge on Weston Ave.",
+      "poster": "assets/past-show-feb-20-elks.jpg",
+      "tags": ["past", "indoor"],
+      "mapQuery": "120+Weston+Ave+Kendallville+IN+46755"
+    }
+  ],
+  "setlist": [
+    {
+      "title": "Waitin’ On the Bus / Jesus Left Chicago",
+      "artist": "ZZ Top",
+      "sangBy": "Adam",
+      "genre": "Blues Rock",
+      "category": "blues"
+    },
+    {
+      "title": "Give Me One Reason",
+      "artist": "Tracy Chapman",
+      "sangBy": "Meg",
+      "genre": "Blues / Roots Rock",
+      "category": "blues"
+    },
+    {
+      "title": "Don’t Do Me Like That",
+      "artist": "Tom Petty and the Heartbreakers",
+      "sangBy": "Adam",
+      "genre": "Heartland Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Stop Draggin’ My Heart Around",
+      "artist": "Stevie Nicks & Tom Petty",
+      "sangBy": "Meg (ft. Adam)",
+      "genre": "Classic Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Green River",
+      "artist": "Creedence Clearwater Revival",
+      "sangBy": "Chris",
+      "genre": "Roots Rock / Swamp Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Twilight Zone",
+      "artist": "Golden Earring",
+      "sangBy": "Meg",
+      "genre": "Hard Rock / New Wave",
+      "category": "rock"
+    },
+    {
+      "title": "Boogie Shoes",
+      "artist": "KC and the Sunshine Band",
+      "sangBy": "Adam",
+      "genre": "Disco / Funk",
+      "category": "brass"
+    },
+    {
+      "title": "Bennie and the Jets",
+      "artist": "Elton John",
+      "sangBy": "Meg",
+      "genre": "Glam Rock / Pop Rock",
+      "category": "pop"
+    },
+    {
+      "title": "Almost Cut My Hair",
+      "artist": "Crosby, Stills, Nash & Young",
+      "sangBy": "Drew",
+      "genre": "Folk Rock / Blues Rock",
+      "category": "blues"
+    },
+    {
+      "title": "Straight On",
+      "artist": "Heart",
+      "sangBy": "Meg",
+      "genre": "Hard Rock / Pop Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Eminence Front",
+      "artist": "The Who",
+      "sangBy": "Adam",
+      "genre": "Synth-Rock / Hard Rock",
+      "category": "rock"
+    },
+    {
+      "title": "White Horse",
+      "artist": "Laid Back (or Taylor Swift)",
+      "sangBy": "Chris (ft. Meg)",
+      "genre": "Synth-Pop / Country Pop",
+      "category": "pop"
+    },
+    {
+      "title": "I Want a New Drug",
+      "artist": "Huey Lewis and the News",
+      "sangBy": "Mike",
+      "genre": "Pop Rock / New Wave",
+      "category": "brass"
+    },
+    {
+      "title": "Urgent",
+      "artist": "Foreigner",
+      "sangBy": "Meg",
+      "genre": "Hard Rock / Arena Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Ride Like The Wind",
+      "artist": "Christopher Cross",
+      "sangBy": "Adam",
+      "genre": "Yacht Rock / Soft Rock",
+      "category": "pop"
+    },
+    {
+      "title": "Shama Lama (Shama Lama Ding Dong)",
+      "artist": "Otis Day & The Knights",
+      "sangBy": "Adam",
+      "genre": "Doo-Wop / Rhythm & Blues",
+      "category": "brass"
+    },
+    {
+      "title": "Sledgehammer",
+      "artist": "Peter Gabriel",
+      "sangBy": "Mike",
+      "genre": "Funk Rock / Art Pop",
+      "category": "brass"
+    },
+    {
+      "title": "While My Guitar Gently Weeps",
+      "artist": "The Beatles",
+      "sangBy": "Adam",
+      "genre": "Classic Rock / Blues Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Piece of My Heart",
+      "artist": "Janis Joplin / Big Brother",
+      "sangBy": "Meg",
+      "genre": "Blues Rock / Soul",
+      "category": "blues"
+    },
+    {
+      "title": "Domino",
+      "artist": "Van Morrison",
+      "sangBy": "Adam",
+      "genre": "Blue-Eyed Soul / Roots Rock",
+      "category": "brass"
+    },
+    {
+      "title": "Superstition",
+      "artist": "Stevie Wonder",
+      "sangBy": "Meg",
+      "genre": "Funk / Soul",
+      "category": "brass"
+    },
+    {
+      "title": "Rocky Mountain Way",
+      "artist": "Joe Walsh",
+      "sangBy": "Adam",
+      "genre": "Hard Rock / Blues Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Jane",
+      "artist": "Jefferson Starship",
+      "sangBy": "Meg",
+      "genre": "Hard Rock / Arena Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Rock and Roll, Hoochie Koo",
+      "artist": "Rick Derringer",
+      "sangBy": "Drew",
+      "genre": "Hard Rock / Blues Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Liza Jane / Rock n' Roll Medley",
+      "artist": "Traditional / Various",
+      "sangBy": "Adam (ft. Meg)",
+      "genre": "Roots Rock / Medley",
+      "category": "rock"
+    },
+    {
+      "title": "Life in the Fast Lane",
+      "artist": "Eagles",
+      "sangBy": "Meg",
+      "genre": "Hard Rock",
+      "category": "rock"
+    },
+    {
+      "title": "The Weight",
+      "artist": "The Band",
+      "sangBy": "Mike",
+      "genre": "Roots Rock / Americana",
+      "category": "blues"
+    },
+    {
+      "title": "Separate Ways (Worlds Apart)",
+      "artist": "Journey",
+      "sangBy": "Meg",
+      "genre": "Arena Rock / Synth-Rock",
+      "category": "rock"
+    },
+    {
+      "title": "Whipping Post",
+      "artist": "The Allman Brothers Band",
+      "sangBy": "Adam",
+      "genre": "Southern Rock / Blues Rock",
+      "category": "blues"
+    },
+    {
+      "title": "Barracuda",
+      "artist": "Heart",
+      "sangBy": "Meg",
+      "genre": "Hard Rock",
+      "category": "rock"
+    },
+    {
+      "title": "With a Little Help from My Friends",
+      "artist": "Joe Cocker / The Beatles",
+      "sangBy": "Adam & Meg",
+      "genre": "Classic Rock / Soul Rock",
+      "category": "rock"
+    },
+    {
+      "title": "I Love Rock 'n' Roll",
+      "artist": "Joan Jett & the Blackhearts",
+      "sangBy": "Meg",
+      "genre": "Hard Rock / Punk Rock",
+      "category": "rock"
+    }
+  ]
+}
