@@ -1690,15 +1690,6 @@
     // Environment Check
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-    // 1. Hook Header Login Button
-    const loginBtn = document.getElementById('headerLoginBtn');
-    if (loginBtn) {
-      loginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openAuth();
-      });
-    }
-
     // 2. Open Auth Modal
     function openAuth() {
       if (authModal) {
@@ -1707,6 +1698,16 @@
         authModal.classList.remove('hidden');
         passInput.focus();
       }
+    }
+
+    // 1. Hook Login Buttons (desktop header + mobile bar)
+    const loginBtn = document.getElementById('headerLoginBtn');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => openAuth());
+    }
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    if (mobileLoginBtn) {
+      mobileLoginBtn.addEventListener('click', () => openAuth());
     }
 
     // 3. Auth Form Handlers
