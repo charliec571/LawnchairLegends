@@ -1690,29 +1690,14 @@
     // Environment Check
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-    // 1. Hook Logo Secret Triggers (3 clicks/taps on the logo)
-    logos.forEach(logo => {
-      let clickCount = 0;
-      let clickTimer = null;
-
-      logo.addEventListener('click', (e) => {
-        clickCount++;
-        
-        if (clickTimer) {
-          clearTimeout(clickTimer);
-        }
-        
-        if (clickCount >= 3) {
-          e.preventDefault();
-          clickCount = 0;
-          openAuth();
-        } else {
-          clickTimer = setTimeout(() => {
-            clickCount = 0;
-          }, 600); // 600ms window to tap 3 times
-        }
+    // 1. Hook Header Login Button
+    const loginBtn = document.getElementById('headerLoginBtn');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAuth();
       });
-    });
+    }
 
     // 2. Open Auth Modal
     function openAuth() {
