@@ -1690,31 +1690,28 @@
     // Environment Check
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-    // 1. Hook Logo Secret Triggers
+    // 1. Hook Logo Secret Triggers (3 clicks/taps on the logo)
     logos.forEach(logo => {
-      // Prevent default right-click context menu and launch auth
-      logo.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        openAuth();
-      });
+      let clickCount = 0;
+      let clickTimer = null;
 
-      // Handle touch/mouse long press hold for 2 seconds
-      let timer;
-      const startHold = (e) => {
-        timer = setTimeout(() => {
+      logo.addEventListener('click', (e) => {
+        clickCount++;
+        
+        if (clickTimer) {
+          clearTimeout(clickTimer);
+        }
+        
+        if (clickCount >= 3) {
+          e.preventDefault();
+          clickCount = 0;
           openAuth();
-        }, 2000);
-      };
-      const endHold = () => {
-        clearTimeout(timer);
-      };
-
-      logo.addEventListener('mousedown', startHold);
-      logo.addEventListener('touchstart', startHold, { passive: true });
-      logo.addEventListener('mouseup', endHold);
-      logo.addEventListener('mouseleave', endHold);
-      logo.addEventListener('touchend', endHold);
-      logo.addEventListener('touchcancel', endHold);
+        } else {
+          clickTimer = setTimeout(() => {
+            clickCount = 0;
+          }, 600); // 600ms window to tap 3 times
+        }
+      });
     });
 
     // 2. Open Auth Modal
