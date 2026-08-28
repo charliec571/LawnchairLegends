@@ -268,31 +268,35 @@
         <div class="section-header">
           <div class="section-tag">ABOUT THE BAND</div>
           <h2 class="section-title">Band Bio</h2>
-          <p class="section-subtitle">Proudly from Noble County, Indiana — bringing hometown talent, great energy, and a whole lot of music to every stage.</p>
+          <p class="section-subtitle" id="bioSectionSubtitle">Proudly from Noble County, Indiana — bringing hometown talent, great energy, and a whole lot of music to every stage.</p>
         </div>
 
         <!-- Band Bio Card (full-width) -->
         <div class="epk-card bio-card bio-card-full">
           <div class="bio-badge">OFFICIAL BAND BIO</div>
-          <h3 class="bio-headline">Lawn Chair Legends</h3>
-          <p class="bio-text">
-            Formed in 2025, the <strong>Lawn Chair Legends</strong> are a hometown band with deep roots in <strong>Noble County, Indiana</strong>. Made up entirely of Noble County natives, the band members share a passion for music, community, and creating memorable experiences through live performances.
-          </p>
-          <p class="bio-text">
-            The Lawn Chair Legends feature <strong>Chris Dafforn</strong> on keys and trumpet, <strong>Mike Kugler</strong> on guitar, <strong>Adam Kugler</strong> on bass, <strong>Drew Mark</strong> on drums, <strong>Meg Rainey</strong> on vocals, <strong>Andrew Wilson</strong> on trumpet, and <strong>Evan Wilson</strong> on saxophone. Together, this talented group brings a full, dynamic sound that blends powerful vocals, a driving rhythm section, and the energy of a live horn section.
-          </p>
-          <p class="bio-text">
-            The band's music spans classic rock, country, blues, and crowd-favorite hits, delivering a mix of songs that appeal to a wide variety of audiences. Whether it's a community celebration, festival, private event, or local gathering, the Lawn Chair Legends bring the perfect combination of talent, fun, and hometown spirit.
-          </p>
-          <p class="bio-text">
-            More than just a band, the Lawn Chair Legends are a group of friends and neighbors proud to represent the community that raised them. Their goal is simple: play great music, bring people together, and create an unforgettable experience for everyone in the crowd.
-          </p>
-          <p class="bio-text bio-quote-highlight">
+          <h3 class="bio-headline" id="bioSectionHeadline">Lawn Chair Legends</h3>
+          
+          <div id="bioParagraphsContainer">
+            <p class="bio-text">
+              Formed in 2025, the <strong>Lawn Chair Legends</strong> are a hometown band with deep roots in <strong>Noble County, Indiana</strong>. Made up entirely of Noble County natives, the band members share a passion for music, community, and creating memorable experiences through live performances.
+            </p>
+            <p class="bio-text">
+              The Lawn Chair Legends feature <strong>Chris Dafforn</strong> on keys and trumpet, <strong>Mike Kugler</strong> on guitar, <strong>Adam Kugler</strong> on bass, <strong>Drew Mark</strong> on drums, <strong>Meg Rainey</strong> on vocals, <strong>Andrew Wilson</strong> on trumpet, and <strong>Evan Wilson</strong> on saxophone. Together, this talented group brings a full, dynamic sound that blends powerful vocals, a driving rhythm section, and the energy of a live horn section.
+            </p>
+            <p class="bio-text">
+              The band's music spans classic rock, country, blues, and crowd-favorite hits, delivering a mix of songs that appeal to a wide variety of audiences. Whether it's a community celebration, festival, private event, or local gathering, the Lawn Chair Legends bring the perfect combination of talent, fun, and hometown spirit.
+            </p>
+            <p class="bio-text">
+              More than just a band, the Lawn Chair Legends are a group of friends and neighbors proud to represent the community that raised them. Their goal is simple: play great music, bring people together, and create an unforgettable experience for everyone in the crowd.
+            </p>
+          </div>
+
+          <p class="bio-text bio-quote-highlight" id="bioSectionQuote">
             <em>"Proudly from Noble County, Indiana — the Lawn Chair Legends bring hometown talent, great energy, and a whole lot of music to every stage."</em>
           </p>
 
           <!-- 7-Member Lineup Grid -->
-          <div class="lineup-grid">
+          <div class="lineup-grid" id="bioMembersGrid">
             <div class="member-chip">
               <div class="member-avatar">🎤</div>
               <div class="member-info">
@@ -928,6 +932,7 @@
           <button class="admin-tab-btn active" data-tab="upcoming">📅 Upcoming Gigs</button>
           <button class="admin-tab-btn" data-tab="past">📜 Past Shows</button>
           <button class="admin-tab-btn" data-tab="setlist">🎵 Setlist Catalog</button>
+          <button class="admin-tab-btn" data-tab="bio">📖 Bio &amp; Lineup</button>
           <button class="admin-tab-btn" data-tab="settings">⚙️ System Settings</button>
           
           <div style="margin-top: auto; padding: 0.5rem;">
@@ -1005,6 +1010,59 @@
                 </thead>
                 <tbody id="adminSetlistList"></tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- Band Bio & Lineup Tab -->
+          <div id="adminTabBio" class="admin-tab-content hidden">
+            <h4 style="margin: 0 0 1.25rem 0; font-size: 1.15rem; color: var(--text-parchment);">Band Bio &amp; Member Lineup</h4>
+            
+            <form id="adminBioForm" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+              <div>
+                <label for="bioHeadlineInput" class="form-label">Bio Headline Title</label>
+                <input type="text" id="bioHeadlineInput" class="form-input" value="Lawn Chair Legends" required />
+              </div>
+
+              <div>
+                <label for="bioSubtitleInput" class="form-label">Section Tagline / Subtitle</label>
+                <input type="text" id="bioSubtitleInput" class="form-input" value="Proudly from Noble County, Indiana — bringing hometown talent, great energy, and a whole lot of music to every stage." required />
+              </div>
+
+              <div>
+                <label for="bioQuoteInput" class="form-label">Highlighted Quote</label>
+                <input type="text" id="bioQuoteInput" class="form-input" value="&quot;Proudly from Noble County, Indiana — the Lawn Chair Legends bring hometown talent, great energy, and a whole lot of music to every stage.&quot;" required />
+              </div>
+
+              <div>
+                <label for="bioStoryInput" class="form-label">Band Bio Paragraphs (Separate paragraphs with double enter/newlines)</label>
+                <textarea id="bioStoryInput" class="form-input" rows="6" style="resize: vertical; font-size: 0.85rem; line-height: 1.5;" placeholder="Enter bio paragraphs..."></textarea>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.4rem 1rem;">Update Bio Content</button>
+              </div>
+            </form>
+
+            <!-- Members Management Section -->
+            <div style="border-top: 1px solid var(--border-subtle); padding-top: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h5 style="margin: 0; font-size: 1.05rem; color: var(--text-parchment);">Band Members (Lineup)</h5>
+                <button type="button" id="addNewMemberBtn" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.4rem 0.8rem;">➕ Add Member</button>
+              </div>
+
+              <div class="input-table-container">
+                <table class="tech-table admin-table" id="adminMembersTable">
+                  <thead>
+                    <tr>
+                      <th style="width: 50px;">Icon</th>
+                      <th>Performer Name</th>
+                      <th>Instrument / Role</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminMembersList"></tbody>
+                </table>
+              </div>
             </div>
           </div>
 
@@ -1143,8 +1201,17 @@
           
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
             <div>
-              <label for="showFormPoster" class="form-label">Poster Image Link</label>
-              <input type="text" id="showFormPoster" class="form-input" placeholder="assets/poster-electric-works.jpg" />
+              <label class="form-label">Show Poster Image</label>
+              <input type="file" id="showPosterFileInput" accept="image/*" style="display: none;" />
+              <button type="button" id="uploadPosterBtn" class="btn btn-outline" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 0.6rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                <span>📁 Upload / Choose Poster</span>
+              </button>
+              <input type="hidden" id="showFormPoster" value="assets/banner.png" />
+              
+              <div id="posterPreviewContainer" style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.4rem; padding: 0.35rem 0.5rem; background: rgba(246, 238, 219, 0.04); border: 1px solid var(--border-subtle); border-radius: 4px;">
+                <img id="posterPreviewImg" src="assets/banner.png" alt="Poster Preview" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" />
+                <span id="posterPreviewName" style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">assets/banner.png</span>
+              </div>
             </div>
             <div>
               <label for="showFormMapQuery" class="form-label">Map Navigation Query</label>
@@ -1208,6 +1275,37 @@
         <div class="modal-actions" style="margin-top: 1rem;">
           <button type="submit" class="btn btn-primary">Save Song</button>
           <button type="button" class="btn btn-secondary" id="closeSongFormBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. Member Form Editor Modal (Secondary overlay) -->
+  <div class="modal-backdrop hidden" id="memberFormModal" role="dialog" aria-modal="true" style="z-index: 11000;">
+    <div class="modal-card" style="max-width: 480px; width: 95%;">
+      <h3 class="modal-title" id="memberFormTitle">Add Band Member</h3>
+      
+      <form id="memberEditorForm" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+        <input type="hidden" id="memberFormIndex" />
+        
+        <div>
+          <label for="memberFormName" class="form-label">Member Name</label>
+          <input type="text" id="memberFormName" class="form-input" placeholder="e.g. Meg Rainey" required />
+        </div>
+
+        <div>
+          <label for="memberFormRole" class="form-label">Role / Instruments</label>
+          <input type="text" id="memberFormRole" class="form-input" placeholder="e.g. Lead Vocals or Keys &amp; Trumpet &amp; Vocals" required />
+        </div>
+
+        <div>
+          <label for="memberFormAvatar" class="form-label">Avatar Emoji / Icon</label>
+          <input type="text" id="memberFormAvatar" class="form-input" placeholder="🎤 or 🎸 or 🥁 or 🎺" value="🎤" required />
+        </div>
+
+        <div class="modal-actions" style="margin-top: 1rem;">
+          <button type="submit" class="btn btn-primary">Save Member</button>
+          <button type="button" class="btn btn-secondary" id="closeMemberFormBtn">Cancel</button>
         </div>
       </form>
     </div>
