@@ -8,7 +8,7 @@
 
   // --- 1. SHOWS DATABASE (Kendallville, Fort Wayne & Lake Country) ---
   // --- 1. SHOWS DATABASE (The 3 Confirmed Upcoming Shows) ---
-  const SHOWS_DATA = [
+  let SHOWS_DATA = [
     {
       id: 'show-1',
       title: 'Bikes on the Bricks @ Electric Works',
@@ -93,7 +93,7 @@
   ];
 
   // --- PAST SHOWS ARCHIVE DATABASE ---
-  const PAST_SHOWS_DATA = [
+  let PAST_SHOWS_DATA = [
     {
       id: 'past-show-1',
       title: 'Bikes on the Bricks @ Electric Works',
@@ -187,7 +187,7 @@
   ];
 
   // --- 2. OFFICIAL 32-SONG SETLIST CATALOG DATABASE ---
-  const SETLIST_DATA = [
+  let SETLIST_DATA = [
     {
       title: "Waitin’ On the Bus / Jesus Left Chicago",
       artist: "ZZ Top",
@@ -472,8 +472,27 @@
   let playbackElapsed = 0;
   let canvasAnimId = null;
 
+  let refreshCalendarView = null;
+  let refreshSetlistView = null;
+
+  async function loadDynamicData() {
+    try {
+      const response = await fetch('data.json');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.shows) SHOWS_DATA = data.shows;
+        if (data.pastShows) PAST_SHOWS_DATA = data.pastShows;
+        if (data.setlist) SETLIST_DATA = data.setlist;
+        console.log("Successfully loaded dynamic data from data.json");
+      }
+    } catch (e) {
+      console.warn("Failed to load dynamic data, using hardcoded fallback database.", e);
+    }
+  }
+
   // --- 5. INITIALIZATION ---
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    await loadDynamicData();
     initSplashPage();
     initFacebookNotice();
     initHeroCountdown();
@@ -485,6 +504,7 @@
     initModals();
     initQuickNavSpy();
     initRSVPButton();
+    initStealthAdmin();
   });
 
   // --- FACEBOOK IN-APP BROWSER DETECTOR ---
