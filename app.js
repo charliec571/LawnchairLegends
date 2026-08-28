@@ -475,6 +475,56 @@
   let refreshCalendarView = null;
   let refreshSetlistView = null;
 
+  let BIO_DATA = {
+    headline: "Lawn Chair Legends",
+    subtitle: "Proudly from Noble County, Indiana — bringing hometown talent, great energy, and a whole lot of music to every stage.",
+    quote: "\"Proudly from Noble County, Indiana — the Lawn Chair Legends bring hometown talent, great energy, and a whole lot of music to every stage.\"",
+    paragraphs: [
+      "Formed in 2025, the <strong>Lawn Chair Legends</strong> are a hometown band with deep roots in <strong>Noble County, Indiana</strong>. Made up entirely of Noble County natives, the band members share a passion for music, community, and creating memorable experiences through live performances.",
+      "The Lawn Chair Legends feature <strong>Chris Dafforn</strong> on keys and trumpet, <strong>Mike Kugler</strong> on guitar, <strong>Adam Kugler</strong> on bass, <strong>Drew Mark</strong> on drums, <strong>Meg Rainey</strong> on vocals, <strong>Andrew Wilson</strong> on trumpet, and <strong>Evan Wilson</strong> on saxophone. Together, this talented group brings a full, dynamic sound that blends powerful vocals, a driving rhythm section, and the energy of a live horn section.",
+      "The band's music spans classic rock, country, blues, and crowd-favorite hits, delivering a mix of songs that appeal to a wide variety of audiences. Whether it's a community celebration, festival, private event, or local gathering, the Lawn Chair Legends bring the perfect combination of talent, fun, and hometown spirit.",
+      "More than just a band, the Lawn Chair Legends are a group of friends and neighbors proud to represent the community that raised them. Their goal is simple: play great music, bring people together, and create an unforgettable experience for everyone in the crowd."
+    ]
+  };
+
+  let MEMBERS_DATA = [
+    { name: "Meg Rainey", role: "Lead Vocals", avatar: "🎤" },
+    { name: "Chris Dafforn", role: "Keys & Trumpet & Vocals", avatar: "🎹 🎺" },
+    { name: "Mike Kugler", role: "Guitar & Vocals", avatar: "🎸" },
+    { name: "Adam Kugler", role: "Bass & Vocals", avatar: "🎸" },
+    { name: "Drew Mark", role: "Drums & Vocals", avatar: "🥁" },
+    { name: "Andrew Wilson", role: "Trumpet", avatar: "🎺" },
+    { name: "Evan Wilson", role: "Saxophone", avatar: "🎷" }
+  ];
+
+  function renderBioAndMembers() {
+    const subtitleEl = document.getElementById('bioSectionSubtitle');
+    const headlineEl = document.getElementById('bioSectionHeadline');
+    const paragraphsContainer = document.getElementById('bioParagraphsContainer');
+    const quoteEl = document.getElementById('bioSectionQuote');
+    const membersGrid = document.getElementById('bioMembersGrid');
+
+    if (subtitleEl && BIO_DATA.subtitle) subtitleEl.textContent = BIO_DATA.subtitle;
+    if (headlineEl && BIO_DATA.headline) headlineEl.textContent = BIO_DATA.headline;
+    if (quoteEl && BIO_DATA.quote) quoteEl.innerHTML = `<em>${BIO_DATA.quote}</em>`;
+
+    if (paragraphsContainer && Array.isArray(BIO_DATA.paragraphs)) {
+      paragraphsContainer.innerHTML = BIO_DATA.paragraphs.map(p => `<p class="bio-text">${p}</p>`).join('');
+    }
+
+    if (membersGrid && Array.isArray(MEMBERS_DATA)) {
+      membersGrid.innerHTML = MEMBERS_DATA.map((m, idx) => `
+        <div class="member-chip" ${idx === MEMBERS_DATA.length - 1 && MEMBERS_DATA.length % 2 !== 0 ? 'style="grid-column: 1 / -1;"' : ''}>
+          <div class="member-avatar">${m.avatar || '🎵'}</div>
+          <div class="member-info">
+            <div class="member-name">${m.name}</div>
+            <div class="member-role">${m.role}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
   async function loadDynamicData() {
     try {
       const response = await fetch('data.json');
@@ -483,6 +533,8 @@
         if (data.shows) SHOWS_DATA = data.shows;
         if (data.pastShows) PAST_SHOWS_DATA = data.pastShows;
         if (data.setlist) SETLIST_DATA = data.setlist;
+        if (data.bio) BIO_DATA = data.bio;
+        if (data.members) MEMBERS_DATA = data.members;
         console.log("Successfully loaded dynamic data from data.json");
       }
     } catch (e) {
@@ -501,6 +553,7 @@
     initSetlistCatalog();
     initAvailabilitySlots();
     initBookingWizard();
+    renderBioAndMembers();
     initModals();
     initQuickNavSpy();
     initRSVPButton();
@@ -1780,6 +1833,18 @@
       renderAdminShowsList();
       renderAdminPastShowsList();
       renderAdminSetlistList();
+      renderAdminMembersList();
+
+      // Prefill Bio form
+      const bioHeadlineInput = document.getElementById('bioHeadlineInput');
+      const bioSubtitleInput = document.getElementById('bioSubtitleInput');
+      const bioQuoteInput = document.getElementById('bioQuoteInput');
+      const bioStoryInput = document.getElementById('bioStoryInput');
+
+      if (bioHeadlineInput) bioHeadlineInput.value = BIO_DATA.headline || 'Lawn Chair Legends';
+      if (bioSubtitleInput) bioSubtitleInput.value = BIO_DATA.subtitle || '';
+      if (bioQuoteInput) bioQuoteInput.value = BIO_DATA.quote || '';
+      if (bioStoryInput) bioStoryInput.value = (BIO_DATA.paragraphs || []).join('\n\n');
     }
 
     if (closeDashBtn) {
@@ -1816,91 +1881,125 @@
       }
     });
 
-    // 5. Render Admin Gigs
+    // 5. Admin Lists Renderers
     function renderAdminShowsList() {
       if (!showsList) return;
       showsList.innerHTML = '';
-      
-      SHOWS_DATA.forEach(show => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td style="font-weight:600; color:var(--accent-gold); white-space:nowrap;">${show.dateMonth} ${show.dateDay}</td>
+
+      if (SHOWS_DATA.length === 0) {
+        showsList.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No upcoming shows found. Add one below!</td></tr>';
+        return;
+      }
+
+      SHOWS_DATA.forEach((show, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${show.dateMonth} ${show.dateDay}, ${show.year || 2026}</strong></td>
           <td>
-            <div style="font-weight:600; color:var(--text-parchment);">${show.title}</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${show.venue}</div>
+            <div style="font-weight: 600;">${show.title}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${show.venue}</div>
           </td>
-          <td><span style="font-size:0.75rem; background:rgba(246,238,219,0.04); border:1px solid var(--border-subtle); padding:0.15rem 0.35rem; border-radius:3px;">${show.region}</span></td>
-          <td style="text-align:right; white-space:nowrap;">
-            <button class="admin-action-btn edit" data-id="${show.id}" title="Edit Show Details">✏️ Edit</button>
-            <button class="admin-action-btn archive" data-id="${show.id}" title="Move to Past Archive">📦 Archive</button>
-            <button class="admin-action-btn delete" data-id="${show.id}" title="Delete Show">❌ Delete</button>
+          <td><span class="tag-badge" style="font-size: 0.65rem;">${show.region || 'lakes'}</span></td>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn btn-outline edit-show-btn" data-id="${show.id}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; margin-right: 0.25rem;">✏️ Edit</button>
+            <button class="btn btn-outline archive-show-btn" data-id="${show.id}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; margin-right: 0.25rem;" title="Move to past shows archive">📜 Archive</button>
+            <button class="btn btn-secondary delete-show-btn" data-id="${show.id}" data-type="upcoming" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; background: rgba(239, 68, 68, 0.1); border-color: #ef4444; color: #ef4444;">🗑️</button>
           </td>
         `;
+        showsList.appendChild(tr);
+      });
 
-        row.querySelector('.edit').addEventListener('click', () => openShowEditor(show, 'upcoming'));
-        row.querySelector('.archive').addEventListener('click', () => archiveUpcomingShow(show.id));
-        row.querySelector('.delete').addEventListener('click', () => deleteShow(show.id, 'upcoming'));
-        
-        showsList.appendChild(row);
+      // Attach button listeners
+      showsList.querySelectorAll('.edit-show-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const show = SHOWS_DATA.find(s => s.id === btn.dataset.id);
+          openShowEditor(show, 'upcoming');
+        });
+      });
+
+      showsList.querySelectorAll('.archive-show-btn').forEach(btn => {
+        btn.addEventListener('click', () => archiveUpcomingShow(btn.dataset.id));
+      });
+
+      showsList.querySelectorAll('.delete-show-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteShow(btn.dataset.id, 'upcoming'));
       });
     }
 
     function renderAdminPastShowsList() {
       if (!pastShowsList) return;
       pastShowsList.innerHTML = '';
-      
-      PAST_SHOWS_DATA.forEach(show => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td style="font-weight:600; color:var(--text-secondary); white-space:nowrap;">${show.dateMonth} ${show.dateDay}</td>
+
+      if (PAST_SHOWS_DATA.length === 0) {
+        pastShowsList.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-muted);">No archived past shows found.</td></tr>';
+        return;
+      }
+
+      PAST_SHOWS_DATA.forEach((show) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${show.dateStr || `${show.dateMonth} ${show.dateDay}`}</strong></td>
           <td>
-            <div style="font-weight:600; color:var(--text-muted);">${show.title}</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${show.venue}</div>
+            <div style="font-weight: 600;">${show.title}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${show.venue}</div>
           </td>
-          <td style="text-align:right; white-space:nowrap;">
-            <button class="admin-action-btn edit" data-id="${show.id}" title="Edit Show Details">✏️ Edit</button>
-            <button class="admin-action-btn delete" data-id="${show.id}" title="Delete Show">❌ Delete</button>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn btn-outline edit-past-show-btn" data-id="${show.id}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; margin-right: 0.25rem;">✏️ Edit</button>
+            <button class="btn btn-secondary delete-past-show-btn" data-id="${show.id}" data-type="past" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; background: rgba(239, 68, 68, 0.1); border-color: #ef4444; color: #ef4444;">🗑️</button>
           </td>
         `;
+        pastShowsList.appendChild(tr);
+      });
 
-        row.querySelector('.edit').addEventListener('click', () => openShowEditor(show, 'past'));
-        row.querySelector('.delete').addEventListener('click', () => deleteShow(show.id, 'past'));
-        
-        pastShowsList.appendChild(row);
+      pastShowsList.querySelectorAll('.edit-past-show-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const show = PAST_SHOWS_DATA.find(s => s.id === btn.dataset.id);
+          openShowEditor(show, 'past');
+        });
+      });
+
+      pastShowsList.querySelectorAll('.delete-past-show-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteShow(btn.dataset.id, 'past'));
       });
     }
 
     function renderAdminSetlistList() {
       if (!setlistList) return;
+      const query = (setlistSearch ? setlistSearch.value : '').toLowerCase().trim();
       setlistList.innerHTML = '';
-      
-      const query = setlistSearch.value.trim().toLowerCase();
-      const filtered = SETLIST_DATA.filter(song => {
-        return !query || 
-          song.title.toLowerCase().includes(query) || 
-          song.artist.toLowerCase().includes(query) ||
-          song.sangBy.toLowerCase().includes(query);
-      });
 
-      filtered.forEach((song, index) => {
-        // Find index of this song in global SETLIST_DATA
-        const originalIndex = SETLIST_DATA.indexOf(song);
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td style="font-weight:600; color:var(--text-parchment);">${song.title}</td>
+      const filtered = SETLIST_DATA.map((song, originalIdx) => ({ ...song, originalIdx }))
+        .filter(s => s.title.toLowerCase().includes(query) || s.artist.toLowerCase().includes(query) || s.sangBy.toLowerCase().includes(query));
+
+      if (filtered.length === 0) {
+        setlistList.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No songs matching search.</td></tr>';
+        return;
+      }
+
+      filtered.forEach((song) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${song.title}</strong></td>
           <td>${song.artist}</td>
-          <td style="color:var(--accent-teal-light); font-weight:500;">${song.sangBy}</td>
-          <td><span style="font-size:0.75rem; background:rgba(246,238,219,0.04); border:1px solid var(--border-subtle); padding:0.15rem 0.35rem; border-radius:3px;">${song.category}</span></td>
-          <td style="text-align:right; white-space:nowrap;">
-            <button class="admin-action-btn edit" title="Edit Song Details">✏️ Edit</button>
-            <button class="admin-action-btn delete" title="Delete Song">❌ Delete</button>
+          <td><span style="font-size: 0.8rem; color: var(--accent-gold);">${song.sangBy}</span></td>
+          <td><span class="tag-badge" style="font-size: 0.65rem;">${song.category}</span></td>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn btn-outline edit-song-btn" data-index="${song.originalIdx}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; margin-right: 0.25rem;">✏️ Edit</button>
+            <button class="btn btn-secondary delete-song-btn" data-index="${song.originalIdx}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; background: rgba(239, 68, 68, 0.1); border-color: #ef4444; color: #ef4444;">🗑️</button>
           </td>
         `;
+        setlistList.appendChild(tr);
+      });
 
-        row.querySelector('.edit').addEventListener('click', () => openSongEditor(song, originalIndex));
-        row.querySelector('.delete').addEventListener('click', () => deleteSong(originalIndex));
-        
-        setlistList.appendChild(row);
+      setlistList.querySelectorAll('.edit-song-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.index);
+          openSongEditor(SETLIST_DATA[index], index);
+        });
+      });
+
+      setlistList.querySelectorAll('.delete-song-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteSong(parseInt(btn.dataset.index)));
       });
     }
 
@@ -1908,11 +2007,37 @@
       setlistSearch.addEventListener('input', renderAdminSetlistList);
     }
 
-    // 6. Show Editor Modal Logic
+    // 6. Show Editor Modal Logic & Poster Upload
+    const uploadPosterBtn = document.getElementById('uploadPosterBtn');
+    const showPosterFileInput = document.getElementById('showPosterFileInput');
+    const posterPreviewImg = document.getElementById('posterPreviewImg');
+    const posterPreviewName = document.getElementById('posterPreviewName');
+    const showFormPoster = document.getElementById('showFormPoster');
+
+    if (uploadPosterBtn && showPosterFileInput) {
+      uploadPosterBtn.addEventListener('click', () => {
+        showPosterFileInput.click();
+      });
+      showPosterFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (loadEvt) => {
+            const dataUrl = loadEvt.target.result;
+            if (showFormPoster) showFormPoster.value = dataUrl;
+            if (posterPreviewImg) posterPreviewImg.src = dataUrl;
+            if (posterPreviewName) posterPreviewName.textContent = file.name;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
     function openShowEditor(show = null, type = 'upcoming') {
       if (!showFormModal) return;
-      
+
       document.getElementById('showFormType').value = type;
+      
       const titleInput = document.getElementById('showFormTitleInput');
       const venueInput = document.getElementById('showFormVenue');
       const regionSelect = document.getElementById('showFormRegion');
@@ -1930,7 +2055,6 @@
       const dayIntInput = document.getElementById('showFormDayInt');
       const parkingInput = document.getElementById('showFormParking');
       const amenitiesInput = document.getElementById('showFormAmenities');
-      const posterInput = document.getElementById('showFormPoster');
       const mapQueryInput = document.getElementById('showFormMapQuery');
 
       const upcomingFields = document.getElementById('upcomingDateFields');
@@ -1943,6 +2067,8 @@
         upcomingFields.style.display = 'grid';
         upcomingDetails.style.display = 'block';
       }
+
+      if (showPosterFileInput) showPosterFileInput.value = '';
 
       if (show) {
         document.getElementById('showFormTitle').textContent = '✏️ Edit Show';
@@ -1959,13 +2085,17 @@
         admissionInput.value = show.admission || '';
         descInput.value = show.description || '';
         
+        const currentPoster = show.poster || 'assets/banner.png';
+        if (showFormPoster) showFormPoster.value = currentPoster;
+        if (posterPreviewImg) posterPreviewImg.src = currentPoster;
+        if (posterPreviewName) posterPreviewName.textContent = currentPoster.startsWith('data:') ? 'Custom Uploaded Image' : currentPoster.split('/').pop();
+
         if (type === 'upcoming') {
           yearInput.value = show.year || 2026;
           monthIntInput.value = (show.month !== undefined) ? (show.month + 1) : 8;
           dayIntInput.value = show.day || 1;
           parkingInput.value = show.parking || '';
           amenitiesInput.value = show.amenities || '';
-          posterInput.value = show.poster || '';
           mapQueryInput.value = show.mapQuery || '';
         }
       } else {
@@ -1978,7 +2108,9 @@
         monthIntInput.value = 8;
         dayIntInput.value = 1;
         regionSelect.value = 'lakes';
-        posterInput.value = 'assets/banner.png';
+        if (showFormPoster) showFormPoster.value = 'assets/banner.png';
+        if (posterPreviewImg) posterPreviewImg.src = 'assets/banner.png';
+        if (posterPreviewName) posterPreviewName.textContent = 'assets/banner.png';
       }
 
       showFormModal.classList.remove('hidden');
@@ -2008,7 +2140,8 @@
           dateDay: document.getElementById('showFormDayStr').value.trim(),
           time: document.getElementById('showFormTime').value.trim(),
           admission: document.getElementById('showFormAdmission').value.trim(),
-          description: document.getElementById('showFormDescription').value.trim()
+          description: document.getElementById('showFormDescription').value.trim(),
+          poster: showFormPoster ? showFormPoster.value : 'assets/banner.png'
         };
 
         if (type === 'upcoming') {
@@ -2017,7 +2150,6 @@
           showObj.day = parseInt(document.getElementById('showFormDayInt').value) || 1;
           showObj.parking = document.getElementById('showFormParking').value.trim();
           showObj.amenities = document.getElementById('showFormAmenities').value.trim();
-          showObj.poster = document.getElementById('showFormPoster').value.trim() || 'assets/banner.png';
           showObj.tags = ['featured', 'free', 'all-ages', 'outdoor']; // default filters
           showObj.mapQuery = document.getElementById('showFormMapQuery').value.trim() || encodeURIComponent(showObj.venue + ' ' + showObj.address);
           
@@ -2045,7 +2177,6 @@
           });
         } else {
           showObj.tags = ['past'];
-          showObj.poster = document.getElementById('showFormPoster').value.trim() || 'assets/banner.png';
           showObj.mapQuery = encodeURIComponent(showObj.venue + ' ' + showObj.address);
           if (id) {
             const index = PAST_SHOWS_DATA.findIndex(s => s.id === id);
@@ -2135,7 +2266,125 @@
       addNewSongBtn.addEventListener('click', () => openSongEditor(null));
     }
 
-    // 8. Delete / Archive Actions
+    // 8. Band Bio and Member Lineup Management
+    const bioForm = document.getElementById('adminBioForm');
+    const adminMembersList = document.getElementById('adminMembersList');
+    const addNewMemberBtn = document.getElementById('addNewMemberBtn');
+    const memberFormModal = document.getElementById('memberFormModal');
+    const memberForm = document.getElementById('memberEditorForm');
+    const closeMemberFormBtn = document.getElementById('closeMemberFormBtn');
+    const memberFormIndex = document.getElementById('memberFormIndex');
+    const memberFormName = document.getElementById('memberFormName');
+    const memberFormRole = document.getElementById('memberFormRole');
+    const memberFormAvatar = document.getElementById('memberFormAvatar');
+
+    function renderAdminMembersList() {
+      if (!adminMembersList) return;
+      adminMembersList.innerHTML = '';
+
+      MEMBERS_DATA.forEach((member, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-size: 1.2rem; text-align: center;">${member.avatar || '🎵'}</td>
+          <td><strong>${member.name}</strong></td>
+          <td style="color: var(--text-muted);">${member.role}</td>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn btn-outline edit-member-btn" data-index="${idx}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; margin-right: 0.25rem;">✏️ Edit</button>
+            <button class="btn btn-secondary delete-member-btn" data-index="${idx}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; background: rgba(239,68,68,0.1); border-color: #ef4444; color: #ef4444;">🗑️</button>
+          </td>
+        `;
+        adminMembersList.appendChild(tr);
+      });
+
+      adminMembersList.querySelectorAll('.edit-member-btn').forEach(btn => {
+        btn.addEventListener('click', () => openMemberEditor(parseInt(btn.dataset.index)));
+      });
+
+      adminMembersList.querySelectorAll('.delete-member-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.dataset.index);
+          const member = MEMBERS_DATA[idx];
+          if (confirm(`Remove ${member.name} from the band lineup?`)) {
+            MEMBERS_DATA.splice(idx, 1);
+            renderAdminMembersList();
+            renderBioAndMembers();
+            showToast(`✓ Removed ${member.name}`);
+          }
+        });
+      });
+    }
+
+    function openMemberEditor(idx = null) {
+      if (idx !== null && MEMBERS_DATA[idx]) {
+        document.getElementById('memberFormTitle').textContent = '✏️ Edit Band Member';
+        memberFormIndex.value = idx;
+        memberFormName.value = MEMBERS_DATA[idx].name || '';
+        memberFormRole.value = MEMBERS_DATA[idx].role || '';
+        memberFormAvatar.value = MEMBERS_DATA[idx].avatar || '🎤';
+      } else {
+        document.getElementById('memberFormTitle').textContent = '➕ Add Band Member';
+        memberFormIndex.value = '';
+        if (memberForm) memberForm.reset();
+        memberFormAvatar.value = '🎤';
+      }
+      if (memberFormModal) memberFormModal.classList.remove('hidden');
+    }
+
+    if (addNewMemberBtn) {
+      addNewMemberBtn.addEventListener('click', () => openMemberEditor(null));
+    }
+
+    if (closeMemberFormBtn && memberFormModal) {
+      closeMemberFormBtn.addEventListener('click', () => memberFormModal.classList.add('hidden'));
+    }
+
+    if (memberForm) {
+      memberForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const idxVal = memberFormIndex.value;
+        const memberObj = {
+          name: memberFormName.value.trim(),
+          role: memberFormRole.value.trim(),
+          avatar: memberFormAvatar.value.trim() || '🎤'
+        };
+
+        if (idxVal !== '' && !isNaN(parseInt(idxVal))) {
+          MEMBERS_DATA[parseInt(idxVal)] = memberObj;
+        } else {
+          MEMBERS_DATA.push(memberObj);
+        }
+
+        if (memberFormModal) memberFormModal.classList.add('hidden');
+        renderAdminMembersList();
+        renderBioAndMembers();
+        showToast("✓ Band member saved!");
+      });
+    }
+
+    if (bioForm) {
+      bioForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const bioHeadlineInput = document.getElementById('bioHeadlineInput');
+        const bioSubtitleInput = document.getElementById('bioSubtitleInput');
+        const bioQuoteInput = document.getElementById('bioQuoteInput');
+        const bioStoryInput = document.getElementById('bioStoryInput');
+
+        BIO_DATA.headline = bioHeadlineInput.value.trim() || 'Lawn Chair Legends';
+        BIO_DATA.subtitle = bioSubtitleInput.value.trim();
+        BIO_DATA.quote = bioQuoteInput.value.trim();
+        
+        const rawStory = bioStoryInput.value.trim();
+        const paragraphs = rawStory.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+        if (paragraphs.length > 0) {
+          BIO_DATA.paragraphs = paragraphs;
+        }
+
+        renderBioAndMembers();
+        showToast("✓ Band Bio details updated!");
+      });
+    }
+
+    // 9. Delete / Archive Actions
     function deleteShow(id, type) {
       if (!confirm(`Are you sure you want to delete this show from the ${type} schedule?`)) return;
       
@@ -2167,22 +2416,9 @@
       
       // Create past show object
       const pastShow = {
+        ...show,
         id: 'past-' + show.id,
-        title: show.title,
-        venue: show.venue,
-        address: show.address,
-        region: show.region,
-        dateStr: show.dateStr,
-        dateMonth: show.dateMonth,
-        dateDay: show.dateDay,
-        year: show.year,
-        time: show.time,
-        type: show.type,
-        admission: show.admission,
-        description: show.description,
-        poster: show.poster.replace('poster-', 'past-show-'),
-        tags: ['past', 'outdoor'],
-        mapQuery: show.mapQuery
+        tags: ['past', 'outdoor']
       };
 
       // Unshift to past archive
@@ -2193,7 +2429,7 @@
       showToast("Show archived locally!");
     }
 
-    // 9. Save and Push Changes Logic
+    // 10. Save and Push Changes Logic
     if (publishChangesBtn) {
       publishChangesBtn.addEventListener('click', saveAllChanges);
     }
@@ -2202,7 +2438,9 @@
       const payload = {
         shows: SHOWS_DATA,
         pastShows: PAST_SHOWS_DATA,
-        setlist: SETLIST_DATA
+        setlist: SETLIST_DATA,
+        bio: BIO_DATA,
+        members: MEMBERS_DATA
       };
 
       publishChangesBtn.disabled = true;
@@ -2211,41 +2449,26 @@
 
       try {
         if (isLocal) {
-          // --- Local POST to server.py ---
           const res = await fetch('/api/save', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
           
           if (!res.ok) throw new Error("Local saving failed.");
-          const responseData = await res.json();
-          if (!responseData.success) throw new Error(responseData.error);
-
           showToast("💾 Changes written to data.json locally!");
         } else {
-          // --- GitHub Pages API Push ---
           const token = gitTokenInput.value.trim();
           const repo = gitRepoInput.value.trim();
           const branch = gitBranchSelect.value;
 
-          if (!token || !repo) {
-            throw new Error("Missing GitHub PAT Token or Repository settings.");
-          }
+          if (!token || !repo) throw new Error("Missing GitHub PAT Token or Repository settings.");
 
-          // Step A: Fetch current data.json SHA
           const url = `https://api.github.com/repos/${repo}/contents/data.json?ref=${branch}`;
-          const getRes = await fetch(url, {
-            headers: { 'Authorization': `token ${token}` }
-          });
-
-          if (!getRes.ok) throw new Error(`Could not locate data.json on ${branch} branch.`);
+          const getRes = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
           const fileMeta = await getRes.json();
           const sha = fileMeta.sha;
 
-          // Step B: PUT update
           const putRes = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -2253,7 +2476,7 @@
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              message: "chore: update shows and setlist via Band Dashboard",
+              message: "chore: update shows, setlist, and band bio via Band Dashboard",
               content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))),
               sha: sha,
               branch: branch
@@ -2267,11 +2490,9 @@
         // --- DYNAMIC LIVE PAGE REFRESH ---
         if (refreshCalendarView) refreshCalendarView();
         if (refreshSetlistView) refreshSetlistView();
+        renderBioAndMembers();
         
-        // Re-run countdown for next show in hero
-        if (SHOWS_DATA.length > 0) {
-          initHeroCountdown();
-        }
+        if (SHOWS_DATA.length > 0) initHeroCountdown();
 
       } catch (err) {
         console.error(err);
