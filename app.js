@@ -525,6 +525,48 @@
     }
   }
 
+  function applyAutomaticDateRollover() {
+    const now = new Date();
+    const activeShows = [];
+    const expiredShows = [];
+
+    SHOWS_DATA.forEach(show => {
+      // Determine show expiration: End of the show day (23:59:59)
+      const showEnd = new Date(show.year || 2026, show.month !== undefined ? show.month : 7, show.day || 1, 23, 59, 59);
+      if (now > showEnd) {
+        // Show has concluded! Convert to past show object
+        const pastShowObj = {
+          ...show,
+          id: show.id.startsWith('past-') ? show.id : ('past-' + show.id),
+          tags: ['past', 'outdoor']
+        };
+        expiredShows.push(pastShowObj);
+      } else {
+        activeShows.push(show);
+      }
+    });
+
+    if (expiredShows.length > 0) {
+      SHOWS_DATA = activeShows;
+
+      expiredShows.forEach(pastShow => {
+        const exists = PAST_SHOWS_DATA.some(p => p.id === pastShow.id || (p.title === pastShow.title && p.dateStr === pastShow.dateStr));
+        if (!exists) {
+          PAST_SHOWS_DATA.unshift(pastShow);
+        }
+      });
+
+      console.log(`[Auto-Rollover] Transferred ${expiredShows.length} completed show(s) to Past Shows Archive.`);
+    }
+
+    // Keep upcoming shows sorted by chronological date
+    SHOWS_DATA.sort((a, b) => {
+      const dateA = new Date(a.year || 2026, a.month !== undefined ? a.month : 0, a.day || 1);
+      const dateB = new Date(b.year || 2026, b.month !== undefined ? b.month : 0, b.day || 1);
+      return dateA - dateB;
+    });
+  }
+
   async function loadDynamicData() {
     try {
       const response = await fetch('data.json');
@@ -540,6 +582,9 @@
     } catch (e) {
       console.warn("Failed to load dynamic data, using hardcoded fallback database.", e);
     }
+
+    // Apply automatic date rollover immediately
+    applyAutomaticDateRollover();
   }
 
   // --- 5. INITIALIZATION ---
@@ -578,23 +623,55 @@
     }
   }
 
-  // --- HERO LIVE COUNTDOWN TIMER ---
+  // --- HERO LIVE COUNTDOWN TIMER & SPOTLIGHT ---
+  let countdownTimerInterval = null;
+
   function initHeroCountdown() {
-    const nextShow = SHOWS_DATA[0]; // Bikes on the Bricks
-    const targetDate = new Date(nextShow.year, nextShow.month, nextShow.day, 19, 0, 0);
+    if (countdownTimerInterval) {
+      clearInterval(countdownTimerInterval);
+      countdownTimerInterval = null;
+    }
+
+    const nextShow = SHOWS_DATA[0];
+    const heroTitleEl = document.getElementById('heroGigTitle');
+    const heroDateEl = document.getElementById('heroGigDate');
+    const heroTimeEl = document.getElementById('heroGigTime');
+    const heroVenueEl = document.getElementById('heroGigVenue');
 
     const daysEl = document.getElementById('countDays');
     const hoursEl = document.getElementById('countHours');
     const minsEl = document.getElementById('countMins');
     const secsEl = document.getElementById('countSecs');
 
+    if (!nextShow) {
+      if (heroTitleEl) heroTitleEl.textContent = 'More 2026/2027 Tour Dates Coming Soon!';
+      if (heroDateEl) heroDateEl.textContent = 'Stay Tuned';
+      if (heroTimeEl) heroTimeEl.textContent = 'Booking Now';
+      if (heroVenueEl) heroVenueEl.textContent = 'Noble County & Across the Midwest';
+      if (daysEl) daysEl.textContent = '00';
+      if (hoursEl) hoursEl.textContent = '00';
+      if (minsEl) minsEl.textContent = '00';
+      if (secsEl) secsEl.textContent = '00';
+      return;
+    }
+
+    // Update Hero Spotlight dynamically
+    if (heroTitleEl) heroTitleEl.textContent = nextShow.title;
+    if (heroDateEl) heroDateEl.textContent = nextShow.dateStr;
+    if (heroTimeEl) heroTimeEl.textContent = nextShow.time;
+    if (heroVenueEl) {
+      const addressShort = nextShow.address.includes(',') ? nextShow.address.split(',')[1].trim() : nextShow.address;
+      heroVenueEl.textContent = `${nextShow.venue} • ${addressShort}`;
+    }
+
+    const targetDate = new Date(nextShow.year || 2026, nextShow.month !== undefined ? nextShow.month : 7, nextShow.day || 1, 19, 0, 0);
+
     function updateCountdown() {
       const now = new Date();
       let diff = targetDate.getTime() - now.getTime();
 
-      // If in past, simulate an upcoming date in 12 days for demo
-      if (diff < 0) {
-        diff = (12 * 86400 + 18 * 3600 + 45 * 60 + 20) * 1000;
+      if (diff <= 0) {
+        diff = 0;
       }
 
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -609,15 +686,17 @@
     }
 
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    countdownTimerInterval = setInterval(updateCountdown, 1000);
 
     // Share Show Button
     const shareBtn = document.getElementById('shareShowBtn');
     if (shareBtn) {
-      shareBtn.addEventListener('click', () => {
+      const newShareBtn = shareBtn.cloneNode(true);
+      shareBtn.parentNode.replaceChild(newShareBtn, shareBtn);
+      newShareBtn.addEventListener('click', () => {
         const shareData = {
           title: 'Catch Lawnchair Legends Live!',
-          text: `Join us at ${nextShow.title} (${nextShow.dateStr})! High-energy horn-infused rock & party anthems in Fort Wayne.`,
+          text: `Join us at ${nextShow.title} (${nextShow.dateStr})! High-energy horn-infused rock & party anthems.`,
           url: window.location.href
         };
         if (navigator.share) {
@@ -633,18 +712,18 @@
     const calToggle = document.getElementById('calendarDropdownToggle');
     const calMenu = document.getElementById('calendarMenu');
     if (calToggle && calMenu) {
-      calToggle.addEventListener('click', (e) => {
+      calToggle.onclick = (e) => {
         e.stopPropagation();
         calMenu.classList.toggle('hidden');
         calToggle.parentElement.classList.toggle('dropdown-open');
-      });
+      };
 
-      document.addEventListener('click', (e) => {
+      document.onclick = (e) => {
         if (!calToggle.contains(e.target) && !calMenu.contains(e.target)) {
           calMenu.classList.add('hidden');
           calToggle.parentElement.classList.remove('dropdown-open');
         }
-      });
+      };
     }
 
     // Google Calendar & .ics export for Next Up Show
@@ -657,7 +736,9 @@
     }
 
     if (icsBtn) {
-      icsBtn.addEventListener('click', () => {
+      const newIcsBtn = icsBtn.cloneNode(true);
+      icsBtn.parentNode.replaceChild(newIcsBtn, icsBtn);
+      newIcsBtn.addEventListener('click', () => {
         downloadIcsFile(nextShow);
         showToast('📅 Show downloaded to your calendar!');
       });
