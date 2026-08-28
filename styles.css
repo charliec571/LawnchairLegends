@@ -2088,7 +2088,7 @@ button {
   -webkit-backdrop-filter: blur(8px);
   z-index: 100;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 1.25rem;
   overflow-y: auto;
