@@ -2664,19 +2664,27 @@
           const repo = gitRepoInput.value.trim();
           const branch = gitBranchSelect.value;
 
-          if (!token || !repo) throw new Error("Missing GitHub PAT Token or Repository settings.");
+          if (!token) throw new Error("No GitHub Personal Access Token entered. Go to the Settings tab and paste your PAT (starts with ghp_).");
+          if (!repo) throw new Error("No GitHub repository set. Check the Settings tab.");
 
-          const url = `https://api.github.com/repos/${repo}/contents/data.json?ref=${branch}`;
-          const getRes = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
+          const url = `https://api.github.com/repos/${repo}/contents/data.json`;
+          const authHeader = { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' };
+
+          // Step 1: Get current file SHA
+          const getRes = await fetch(`${url}?ref=${branch}`, { headers: authHeader });
+          if (getRes.status === 401) throw new Error("GitHub token rejected (401 Unauthorized). Your PAT may have expired or been deleted. Generate a new one at github.com → Settings → Developer Settings → Personal Access Tokens.");
+          if (getRes.status === 403) throw new Error("GitHub token lacks permissions (403 Forbidden). Make sure your PAT has 'Contents: Read & Write' permission on the repository.");
+          if (getRes.status === 404) throw new Error(`Repository or file not found (404). Check that the repo '${repo}' and branch '${branch}' are correct in Settings.`);
+          if (!getRes.ok) throw new Error(`GitHub file fetch failed: HTTP ${getRes.status}`);
+
           const fileMeta = await getRes.json();
+          if (!fileMeta.sha) throw new Error("Could not read current file SHA from GitHub. The file may not exist yet in the repository.");
           const sha = fileMeta.sha;
 
+          // Step 2: Commit updated content
           const putRes = await fetch(url, {
             method: 'PUT',
-            headers: {
-              'Authorization': `token ${token}`,
-              'Content-Type': 'application/json'
-            },
+            headers: { ...authHeader, 'Content-Type': 'application/json' },
             body: JSON.stringify({
               message: "chore: update shows, setlist, and band bio via Band Dashboard",
               content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))),
@@ -2685,7 +2693,13 @@
             })
           });
 
-          if (!putRes.ok) throw new Error("GitHub API push commit failed.");
+          if (putRes.status === 401) throw new Error("GitHub token rejected on write (401). Regenerate your PAT and re-enter it in Settings.");
+          if (putRes.status === 403) throw new Error("GitHub token does not have write permission (403). Enable 'Contents: Read & Write' on your PAT.");
+          if (putRes.status === 422) throw new Error("GitHub rejected the commit (422 Unprocessable). The SHA may be stale — try refreshing and saving again.");
+          if (!putRes.ok) {
+            const errBody = await putRes.json().catch(() => ({}));
+            throw new Error(`GitHub commit failed: HTTP ${putRes.status} — ${errBody.message || 'Unknown error'}`);
+          }
           showToast("🚀 Changes committed to GitHub! Site will update in ~1 min.");
         }
 
@@ -2693,12 +2707,12 @@
         if (refreshCalendarView) refreshCalendarView();
         if (refreshSetlistView) refreshSetlistView();
         renderBioAndMembers();
-        
+
         if (SHOWS_DATA.length > 0) initHeroCountdown();
 
       } catch (err) {
         console.error(err);
-        alert(`Error saving changes: ${err.message}`);
+        alert(`⚠️ Save failed:\n\n${err.message}`);
       } finally {
         publishChangesBtn.disabled = false;
         publishChangesBtn.innerHTML = originalText;
