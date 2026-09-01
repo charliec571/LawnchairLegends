@@ -2130,58 +2130,157 @@
       });
     }
 
+    // --- Smart Paste Parser ---
+    const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const MONTH_ABBR  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function parseShowFromText(text) {
+      const result = {};
+
+      // Extract year (4-digit number 2024–2030)
+      const yearMatch = text.match(/\b(202[4-9]|2030)\b/);
+      if (yearMatch) result.year = parseInt(yearMatch[1]);
+
+      // Extract month name (written out or abbreviated)
+      for (let i = 0; i < MONTH_NAMES.length; i++) {
+        const re = new RegExp(`\\b${MONTH_NAMES[i]}\\b|\\b${MONTH_ABBR[i]}\\.?\\b`, 'i');
+        if (re.test(text)) { result.month = i + 1; break; }
+      }
+
+      // Extract day number (1–31, must follow month name area or be near "@" "on")
+      const dayMatch = text.match(/\b([1-9]|[12]\d|3[01])(st|nd|rd|th)?\b/);
+      if (dayMatch) result.day = parseInt(dayMatch[1]);
+
+      // Extract time (e.g. 7:00 PM, 7 PM, 7:00pm – 9:00pm)
+      const timeMatch = text.match(/(\d{1,2}(?::\d{2})?\s*(?:AM|PM))\s*(?:[-–]\s*(\d{1,2}(?::\d{2})?\s*(?:AM|PM)))?/i);
+      if (timeMatch) {
+        result.time = timeMatch[2]
+          ? `${timeMatch[1].trim().toUpperCase()} – ${timeMatch[2].trim().toUpperCase()}`
+          : timeMatch[1].trim().toUpperCase();
+      }
+
+      // Extract venue: first line that contains "@" or "at" (case-insensitive)
+      const lines = text.split(/\n/).map(l => l.trim()).filter(Boolean);
+      // Venue: look for "at <venue>" or "@<venue>"
+      const venueMatch = text.match(/(?:^|\n|at |@ ?)([\w\s\-&'.,]+(?:Club|Hall|Bar|Works|Grill|Theater|Centre|Center|Park|Inn|Hotel|Field|Stage|Venue|Arena|Fest|Farm|Lake|Club|Community)[\w\s\-&'.,]*)/i);
+      if (venueMatch) result.venue = venueMatch[1].trim();
+
+      // Extract address: look for lines with street number pattern
+      const addrMatch = text.match(/\b\d+\s+[\w\s]+(?:St|Ave|Blvd|Dr|Rd|Ln|Way|Ct|Hwy|Highway|Route|Circle)[.,]?\s*[\w\s,]+(?:IN|OH|IL|MI|KY|TN|WI|MN)\s*\d{5}/i);
+      if (addrMatch) result.address = addrMatch[0].trim();
+
+      // Extract admission/ticket info
+      if (/free/i.test(text)) result.admission = 'Free Admission • All Ages';
+      else if (/all ages/i.test(text)) result.admission = 'All Ages';
+      else if (/21\+/i.test(text)) result.admission = '21+ Event';
+      else if (/ticket/i.test(text)) result.admission = 'Ticketed Event';
+
+      // Title: first non-empty line
+      if (lines[0]) result.title = lines[0].replace(/^(lawnchair legends|lcl)[:\-\s]*/i, '').trim();
+
+      // Description: grab everything after the date/time/venue as remaining text
+      const descLines = lines.slice(1).filter(l =>
+        !/\b202[4-9]\b/.test(l) &&
+        !/^\d{1,2}(:\d{2})?\s*(AM|PM)/i.test(l) &&
+        l.length > 20
+      );
+      if (descLines.length > 0) result.description = descLines.join(' ').substring(0, 400);
+
+      return result;
+    }
+
+    const smartPasteBtn = document.getElementById('smartPasteBtn');
+    const smartPasteInput = document.getElementById('smartPasteInput');
+    const smartPasteStatus = document.getElementById('smartPasteStatus');
+
+    if (smartPasteBtn && smartPasteInput) {
+      smartPasteBtn.addEventListener('click', () => {
+        const text = smartPasteInput.value.trim();
+        if (!text) return;
+
+        const parsed = parseShowFromText(text);
+        let filled = 0;
+
+        const titleEl = document.getElementById('showFormTitleInput');
+        const venueEl = document.getElementById('showFormVenue');
+        const addressEl = document.getElementById('showFormAddress');
+        const monthEl = document.getElementById('showFormMonthInt');
+        const dayEl = document.getElementById('showFormDayInt');
+        const yearEl = document.getElementById('showFormYear');
+        const timeEl = document.getElementById('showFormTime');
+        const admissionEl = document.getElementById('showFormAdmission');
+        const descEl = document.getElementById('showFormDescription');
+
+        if (parsed.title && titleEl && !titleEl.value) { titleEl.value = parsed.title; filled++; }
+        if (parsed.venue && venueEl && !venueEl.value) { venueEl.value = parsed.venue; filled++; }
+        if (parsed.address && addressEl && !addressEl.value) { addressEl.value = parsed.address; filled++; }
+        if (parsed.month && monthEl) { monthEl.value = parsed.month; filled++; }
+        if (parsed.day && dayEl) { dayEl.value = parsed.day; filled++; }
+        if (parsed.year && yearEl) { yearEl.value = parsed.year; filled++; }
+        if (parsed.time && timeEl && !timeEl.value) { timeEl.value = parsed.time; filled++; }
+        if (parsed.admission && admissionEl && !admissionEl.value) { admissionEl.value = parsed.admission; filled++; }
+        if (parsed.description && descEl && !descEl.value) { descEl.value = parsed.description; filled++; }
+
+        if (smartPasteStatus) {
+          smartPasteStatus.style.display = 'block';
+          smartPasteStatus.style.color = filled > 3 ? '#10b981' : 'var(--accent-gold)';
+          smartPasteStatus.textContent = filled > 3
+            ? `✓ Auto-filled ${filled} fields! Review and correct anything the parser missed.`
+            : `⚠️ Only found ${filled} fields — paste more complete event text for better results.`;
+        }
+      });
+    }
+
     function openShowEditor(show = null, type = 'upcoming') {
       if (!showFormModal) return;
 
       document.getElementById('showFormType').value = type;
-      
+
       const titleInput = document.getElementById('showFormTitleInput');
       const venueInput = document.getElementById('showFormVenue');
       const regionSelect = document.getElementById('showFormRegion');
       const addressInput = document.getElementById('showFormAddress');
-      const dateStrInput = document.getElementById('showFormDateStr');
-      const monthStrInput = document.getElementById('showFormMonthStr');
-      const dayStrInput = document.getElementById('showFormDayStr');
       const timeInput = document.getElementById('showFormTime');
       const admissionInput = document.getElementById('showFormAdmission');
       const descInput = document.getElementById('showFormDescription');
-      
-      // Upcoming specific fields
+
+      // Numeric date fields
       const yearInput = document.getElementById('showFormYear');
       const monthIntInput = document.getElementById('showFormMonthInt');
       const dayIntInput = document.getElementById('showFormDayInt');
-      const parkingInput = document.getElementById('showFormParking');
-      const amenitiesInput = document.getElementById('showFormAmenities');
-      const mapQueryInput = document.getElementById('showFormMapQuery');
 
       const upcomingFields = document.getElementById('upcomingDateFields');
       const upcomingDetails = document.getElementById('upcomingDetailsFields');
+      const smartPasteSection = document.getElementById('smartPasteSection');
 
       if (type === 'past') {
-        upcomingFields.style.display = 'none';
-        upcomingDetails.style.display = 'none';
+        if (upcomingFields) upcomingFields.style.display = 'none';
+        if (upcomingDetails) upcomingDetails.style.display = 'none';
+        if (smartPasteSection) smartPasteSection.style.display = 'none';
       } else {
-        upcomingFields.style.display = 'grid';
-        upcomingDetails.style.display = 'block';
+        if (upcomingFields) upcomingFields.style.display = 'grid';
+        if (upcomingDetails) upcomingDetails.style.display = 'flex';
+        if (smartPasteSection) smartPasteSection.style.display = '';
       }
+
+      // Reset smart paste
+      if (smartPasteInput) smartPasteInput.value = '';
+      if (smartPasteStatus) smartPasteStatus.style.display = 'none';
 
       if (showPosterFileInput) showPosterFileInput.value = '';
 
       if (show) {
         document.getElementById('showFormTitle').textContent = '✏️ Edit Show';
         document.getElementById('showFormId').value = show.id;
-        
+
         titleInput.value = show.title || '';
         venueInput.value = show.venue || '';
         regionSelect.value = show.region || 'lakes';
         addressInput.value = show.address || '';
-        dateStrInput.value = show.dateStr || '';
-        monthStrInput.value = show.dateMonth || '';
-        dayStrInput.value = show.dateDay || '';
         timeInput.value = show.time || '';
         admissionInput.value = show.admission || '';
         descInput.value = show.description || '';
-        
+
         const currentPoster = show.poster || 'assets/banner.png';
         if (showFormPoster) showFormPoster.value = currentPoster;
         if (posterPreviewImg) posterPreviewImg.src = currentPoster;
@@ -2191,16 +2290,12 @@
           yearInput.value = show.year || 2026;
           monthIntInput.value = (show.month !== undefined) ? (show.month + 1) : 8;
           dayIntInput.value = show.day || 1;
-          parkingInput.value = show.parking || '';
-          amenitiesInput.value = show.amenities || '';
-          mapQueryInput.value = show.mapQuery || '';
         }
       } else {
         document.getElementById('showFormTitle').textContent = '➕ Add New Show';
         document.getElementById('showFormId').value = '';
         showForm.reset();
-        
-        // set default values
+
         yearInput.value = 2026;
         monthIntInput.value = 8;
         dayIntInput.value = 1;
@@ -2222,19 +2317,31 @@
     if (showForm) {
       showForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         const id = document.getElementById('showFormId').value;
         const type = document.getElementById('showFormType').value;
+
+        const monthInt = parseInt(document.getElementById('showFormMonthInt')?.value) || 8;
+        const dayInt = parseInt(document.getElementById('showFormDayInt')?.value) || 1;
+        const yearInt = parseInt(document.getElementById('showFormYear')?.value) || 2026;
+
+        // Auto-generate date display strings from numeric inputs
+        const dateObj = new Date(yearInt, monthInt - 1, dayInt);
+        const autoDateStr = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+        const autoMonthAbbr = MONTH_ABBR[monthInt - 1].toUpperCase();
+        const autoDayStr = String(dayInt);
+
+        const addressVal = document.getElementById('showFormAddress').value.trim();
 
         const showObj = {
           id: id || ((type === 'upcoming' ? 'show-' : 'past-show-') + Date.now()),
           title: document.getElementById('showFormTitleInput').value.trim(),
           venue: document.getElementById('showFormVenue').value.trim(),
-          address: document.getElementById('showFormAddress').value.trim(),
+          address: addressVal,
           region: document.getElementById('showFormRegion').value,
-          dateStr: document.getElementById('showFormDateStr').value.trim(),
-          dateMonth: document.getElementById('showFormMonthStr').value.trim().toUpperCase(),
-          dateDay: document.getElementById('showFormDayStr').value.trim(),
+          dateStr: autoDateStr,
+          dateMonth: autoMonthAbbr,
+          dateDay: autoDayStr,
           time: document.getElementById('showFormTime').value.trim(),
           admission: document.getElementById('showFormAdmission').value.trim(),
           description: document.getElementById('showFormDescription').value.trim(),
@@ -2242,22 +2349,20 @@
         };
 
         if (type === 'upcoming') {
-          showObj.year = parseInt(document.getElementById('showFormYear').value) || 2026;
-          showObj.month = (parseInt(document.getElementById('showFormMonthInt').value) || 1) - 1;
-          showObj.day = parseInt(document.getElementById('showFormDayInt').value) || 1;
-          showObj.parking = document.getElementById('showFormParking').value.trim();
-          showObj.amenities = document.getElementById('showFormAmenities').value.trim();
+          showObj.year = yearInt;
+          showObj.month = monthInt - 1; // 0-indexed for JS Date
+          showObj.day = dayInt;
           showObj.tags = ['featured', 'free', 'all-ages', 'outdoor']; // default filters
-          showObj.mapQuery = document.getElementById('showFormMapQuery').value.trim() || encodeURIComponent(showObj.venue + ' ' + showObj.address);
-          
+          // Auto-generate mapQuery from address
+          showObj.mapQuery = encodeURIComponent(addressVal || showObj.venue);
+
           // Generate calendar variables
-          const yearPadded = showObj.year;
-          const monthPadded = String(showObj.month + 1).padStart(2, '0');
-          const dayPadded = String(showObj.day).padStart(2, '0');
-          showObj.dtStart = `${yearPadded}${monthPadded}${dayPadded}T190000`;
-          showObj.dtEnd = `${yearPadded}${monthPadded}${dayPadded}T220000`;
-          showObj.startIso = `${yearPadded}-${monthPadded}-${dayPadded}T19:00:00`;
-          showObj.endIso = `${yearPadded}-${monthPadded}-${dayPadded}T22:00:00`;
+          const monthPadded = String(monthInt).padStart(2, '0');
+          const dayPadded = String(dayInt).padStart(2, '0');
+          showObj.dtStart = `${yearInt}${monthPadded}${dayPadded}T190000`;
+          showObj.dtEnd   = `${yearInt}${monthPadded}${dayPadded}T220000`;
+          showObj.startIso = `${yearInt}-${monthPadded}-${dayPadded}T19:00:00`;
+          showObj.endIso   = `${yearInt}-${monthPadded}-${dayPadded}T22:00:00`;
 
           if (id) {
             const index = SHOWS_DATA.findIndex(s => s.id === id);
@@ -2265,7 +2370,7 @@
           } else {
             SHOWS_DATA.push(showObj);
           }
-          
+
           // Keep shows sorted by date
           SHOWS_DATA.sort((a, b) => {
             const dateA = new Date(a.year, a.month, a.day);
@@ -2274,7 +2379,7 @@
           });
         } else {
           showObj.tags = ['past'];
-          showObj.mapQuery = encodeURIComponent(showObj.venue + ' ' + showObj.address);
+          showObj.mapQuery = encodeURIComponent(addressVal || showObj.venue);
           if (id) {
             const index = PAST_SHOWS_DATA.findIndex(s => s.id === id);
             if (index !== -1) PAST_SHOWS_DATA[index] = showObj;
