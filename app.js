@@ -844,6 +844,11 @@
             ${show.tags.map(tag => `<span class="tag-badge ${tag}">${formatTagLabel(tag)}</span>`).join('')}
           </div>
 
+          ${show.ticketUrl ? `
+          <a href="${show.ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-tickets-cta">
+            🎟️ Buy Tickets!
+          </a>
+          ` : ''}
           <div class="show-card-actions">
             <a href="https://maps.apple.com/?q=${show.mapQuery}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" aria-label="Directions to ${show.venue}">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
@@ -1524,6 +1529,17 @@
           downloadIcsFile(show);
           showToast(`📅 ${show.title} saved to calendar!`);
         };
+      }
+    }
+
+    const buyTicketsBtn = document.getElementById('modalBuyTicketsBtn');
+    if (buyTicketsBtn) {
+      if (show.ticketUrl) {
+        buyTicketsBtn.href = show.ticketUrl;
+        buyTicketsBtn.classList.remove('hidden');
+      } else {
+        buyTicketsBtn.href = '#';
+        buyTicketsBtn.classList.add('hidden');
       }
     }
 
