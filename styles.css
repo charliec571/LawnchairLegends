@@ -422,6 +422,33 @@ button {
   background: rgba(246, 238, 219, 0.16);
 }
 
+.btn-tickets-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  color: #1a0f00;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.45);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-tickets-cta:hover {
+  background: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.6);
+  color: #1a0f00;
+}
+
 /* --- Section Shared Styles --- */
 .section {
   padding: 4.5rem 0;
