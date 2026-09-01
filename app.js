@@ -109,7 +109,7 @@
       parking: 'On-site parking',
       amenities: 'Event Center, Craft Beer & Wine, Outdoor Lawn',
       description: 'Join Lawnchair Legends live at Sylvan Cellars in Rome City for high-energy horn-infused rock hits!',
-      poster: 'assets/banner.png',
+      poster: 'assets/poster-sylvan-cellars.jpg',
       tags: ['featured', 'free', 'all-ages', 'outdoor'],
       isNextUp: false,
       dtStart: '20261121T190000',
