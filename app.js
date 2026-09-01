@@ -2668,6 +2668,7 @@
           
           if (!res.ok) throw new Error("Local saving failed.");
           showToast("💾 Changes written to data.json locally!");
+        } else {
           const token = (gitTokenInput && gitTokenInput.value.trim()) || localStorage.getItem('lcl_git_token') || getSharedToken();
           const repo = (gitRepoInput && gitRepoInput.value.trim()) || localStorage.getItem('lcl_git_repo') || 'charliec571/LawnchairLegends';
           const branch = (gitBranchSelect && gitBranchSelect.value) || localStorage.getItem('lcl_git_branch') || 'main';
