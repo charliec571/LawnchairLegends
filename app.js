@@ -569,7 +569,7 @@
 
   async function loadDynamicData() {
     try {
-      const response = await fetch('data.json');
+      const response = await fetch(`data.json?_t=${Date.now()}`, { cache: 'no-store' });
       if (response.ok) {
         const data = await response.json();
         if (data.shows) SHOWS_DATA = data.shows;
