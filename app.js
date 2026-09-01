@@ -88,7 +88,35 @@
       dtEnd: '20260926T220000',
       startIso: '20260926T230000Z',
       endIso: '20260927T020000Z',
-      mapQuery: 'Community+Learning+Center+401+E+Diamond+St+Kendallville+IN+46755'
+      mapQuery: 'Community+Learning+Center+401+E+Diamond+St+Kendallville+IN+46755',
+      ticketUrl: 'https://www.thecommunitylearningcenter.org/events?fbclid=IwY2xjawUDAsxwZG9mBWV4dG4DYWVtAjEwAGJyaWQRMUg4S1hSNXZhZVM2UHV2aEZzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEe7oRw1RMY4XKssJmc98neRpybfo8jcCVT8LbQHfv8Tz6EnRp6ddWMkFo-i_U_aem_ZmFrZWR1bW15MTZieXRlcw#eca-event=lawn-chair-legends'
+    },
+    {
+      id: 'show-1788235244795',
+      title: 'Lawnchair Legends at Sylvan Cellars',
+      venue: 'Sylvan Cellars',
+      address: '2725 E Northport Rd, Rome City, IN 46784',
+      region: 'lakes',
+      dateStr: 'Saturday, Nov 21, 2026',
+      dateMonth: 'NOV',
+      dateDay: '21',
+      year: 2026,
+      month: 10,
+      day: 21,
+      time: '7 to 10pm',
+      type: 'Live Music Concert',
+      admission: 'Free',
+      parking: 'On-site parking',
+      amenities: 'Event Center, Craft Beer & Wine, Outdoor Lawn',
+      description: 'Join Lawnchair Legends live at Sylvan Cellars in Rome City for high-energy horn-infused rock hits!',
+      poster: 'assets/banner.png',
+      tags: ['featured', 'free', 'all-ages', 'outdoor'],
+      isNextUp: false,
+      dtStart: '20261121T190000',
+      dtEnd: '20261121T220000',
+      startIso: '2026-11-21T19:00:00',
+      endIso: '2026-11-21T22:00:00',
+      mapQuery: '2725%20E%20Northport%20Rd%2C%20Rome%20City%2C%20IN%2046784'
     }
   ];
 
