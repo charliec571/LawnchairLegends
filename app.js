@@ -2600,6 +2600,119 @@
       addNewSongBtn.addEventListener('click', () => openSongEditor(null));
     }
 
+    // 7b. Video Editor Modal Logic
+    const videoFormModal = document.getElementById('videoFormModal');
+    const videoForm = document.getElementById('videoEditorForm');
+    const closeVideoFormBtn = document.getElementById('closeVideoFormBtn');
+    const addNewVideoBtn = document.getElementById('addNewVideoBtn');
+
+    function renderAdminVideosList() {
+      const list = document.getElementById('adminVideosList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      if (!VIDEOS_DATA || VIDEOS_DATA.length === 0) {
+        list.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 2rem;">No videos added yet. Click "Add Video Link" to get started.</td></tr>`;
+        return;
+      }
+
+      VIDEOS_DATA.forEach((vid, idx) => {
+        const tr = document.createElement('tr');
+        const platformLabel = vid.url && vid.url.includes('youtube') ? '🎬 YouTube' : '📘 Facebook';
+        tr.innerHTML = `
+          <td><strong>${vid.title || 'Untitled'}</strong>${vid.date ? `<br><span style="font-size:0.75rem;color:var(--text-muted)">${vid.date}</span>` : ''}</td>
+          <td style="color: var(--text-muted);">${vid.venue || '—'}</td>
+          <td><span style="font-size:0.8rem">${platformLabel}</span></td>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn btn-outline" style="font-size:0.7rem;padding:0.25rem 0.5rem;margin-right:0.25rem;" onclick="window._editVideo(${idx})">✏️ Edit</button>
+            <button class="btn btn-outline" style="font-size:0.7rem;padding:0.25rem 0.5rem;color:#e74c3c;" onclick="window._deleteVideo(${idx})">🗑️</button>
+          </td>
+        `;
+        list.appendChild(tr);
+      });
+    }
+
+    function openVideoEditor(video = null, index = null) {
+      if (!videoFormModal) return;
+
+      const titleInput = document.getElementById('videoFormTitleInput');
+      const urlInput = document.getElementById('videoFormUrl');
+      const venueInput = document.getElementById('videoFormVenue');
+      const dateInput = document.getElementById('videoFormDate');
+      const descInput = document.getElementById('videoFormDescription');
+      const formIdInput = document.getElementById('videoFormId');
+
+      if (video) {
+        document.getElementById('videoFormTitle').textContent = '✏️ Edit Video';
+        formIdInput.value = index;
+        titleInput.value = video.title || '';
+        urlInput.value = video.url || '';
+        venueInput.value = video.venue || '';
+        dateInput.value = video.date || '';
+        descInput.value = video.description || '';
+      } else {
+        document.getElementById('videoFormTitle').textContent = '➕ Add Live Video Link';
+        formIdInput.value = '';
+        titleInput.value = '';
+        urlInput.value = '';
+        venueInput.value = '';
+        dateInput.value = '';
+        descInput.value = '';
+      }
+
+      videoFormModal.classList.remove('hidden');
+    }
+
+    // Expose edit/delete to inline onclick handlers
+    window._editVideo = function(idx) {
+      openVideoEditor(VIDEOS_DATA[idx], idx);
+    };
+    window._deleteVideo = function(idx) {
+      if (confirm(`Delete video "${VIDEOS_DATA[idx].title}"?`)) {
+        VIDEOS_DATA.splice(idx, 1);
+        renderAdminVideosList();
+        renderMediaSection();
+        showToast('✓ Video removed from local list!');
+      }
+    };
+
+    if (closeVideoFormBtn) {
+      closeVideoFormBtn.addEventListener('click', () => {
+        videoFormModal.classList.add('hidden');
+      });
+    }
+
+    if (videoForm) {
+      videoForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const indexStr = document.getElementById('videoFormId').value;
+        const videoObj = {
+          id: indexStr !== '' ? VIDEOS_DATA[parseInt(indexStr)].id : 'vid-' + Date.now(),
+          title: document.getElementById('videoFormTitleInput').value.trim(),
+          url: document.getElementById('videoFormUrl').value.trim(),
+          venue: document.getElementById('videoFormVenue').value.trim(),
+          date: document.getElementById('videoFormDate').value.trim(),
+          description: document.getElementById('videoFormDescription').value.trim()
+        };
+
+        if (indexStr !== '') {
+          VIDEOS_DATA[parseInt(indexStr)] = videoObj;
+        } else {
+          VIDEOS_DATA.push(videoObj);
+        }
+
+        videoFormModal.classList.add('hidden');
+        renderAdminVideosList();
+        renderMediaSection();
+        showToast('✓ Video saved in local list!');
+      });
+    }
+
+    if (addNewVideoBtn) {
+      addNewVideoBtn.addEventListener('click', () => openVideoEditor(null));
+    }
+
     // 8. Band Bio and Member Lineup Management
     const bioForm = document.getElementById('adminBioForm');
     const adminMembersList = document.getElementById('adminMembersList');
@@ -2774,7 +2887,8 @@
         pastShows: PAST_SHOWS_DATA,
         setlist: SETLIST_DATA,
         bio: BIO_DATA,
-        members: MEMBERS_DATA
+        members: MEMBERS_DATA,
+        videos: VIDEOS_DATA
       };
 
       publishChangesBtn.disabled = true;
