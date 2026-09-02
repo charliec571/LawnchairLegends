@@ -525,6 +525,94 @@
     { name: "Evan Wilson", role: "Saxophone", avatar: "🎷" }
   ];
 
+  let VIDEOS_DATA = [
+    {
+      id: "vid-1",
+      title: "Vehicle (Live Performance Highlight)",
+      url: "https://www.facebook.com/profile.php?id=61585160237026",
+      venue: "Live in Concert",
+      date: "2026",
+      description: "High-energy brass rock with full horn section live on stage!"
+    },
+    {
+      id: "vid-2",
+      title: "25 or 6 to 4 – Chicago Cover (Live)",
+      url: "https://www.facebook.com/profile.php?id=61585160237026",
+      venue: "Electric Works Festival Plaza",
+      date: "Summer 2026",
+      description: "Lawnchair Legends bringing down the house with classic rock anthems."
+    }
+  ];
+
+  function getFacebookEmbedUrl(rawUrl) {
+    if (!rawUrl) return '';
+    const trimmed = rawUrl.trim();
+    // YouTube Support
+    if (trimmed.includes('youtube.com') || trimmed.includes('youtu.be')) {
+      let videoId = '';
+      if (trimmed.includes('youtu.be/')) {
+        videoId = trimmed.split('youtu.be/')[1].split('?')[0];
+      } else if (trimmed.includes('watch?v=')) {
+        videoId = trimmed.split('watch?v=')[1].split('&')[0];
+      }
+      if (videoId) return `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`;
+    }
+    // Facebook Embed Plugin standard URL
+    return `https://www.facebook.com/plugins/video.php?height=314&href=${encodeURIComponent(trimmed)}&show_text=false&width=560&t=0`;
+  }
+
+  function renderMediaSection() {
+    const grid = document.getElementById('mediaVideoGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    if (!VIDEOS_DATA || VIDEOS_DATA.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1.5rem; color: var(--text-muted); background: var(--bg-card); border-radius: var(--radius-md); border: 1px dashed var(--border-subtle);">
+          <p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-parchment);">Live performance clips coming soon!</p>
+          <p style="font-size: 0.85rem;">Check our Facebook page for the latest gig highlights.</p>
+        </div>
+      `;
+      return;
+    }
+
+    VIDEOS_DATA.forEach(vid => {
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      const embedUrl = getFacebookEmbedUrl(vid.url);
+
+      card.innerHTML = `
+        <div class="video-embed-wrapper">
+          <iframe 
+            src="${embedUrl}" 
+            class="video-embed-iframe" 
+            scrolling="no" 
+            frameborder="0" 
+            allowfullscreen="true" 
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            loading="lazy"
+            title="${vid.title}">
+          </iframe>
+        </div>
+        <div class="video-card-body">
+          <h3 class="video-card-title">${vid.title}</h3>
+          <div class="video-meta-row">
+            ${vid.venue ? `<span class="video-venue-tag">📍 ${vid.venue}</span>` : ''}
+            ${vid.date ? `<span>• 📅 ${vid.date}</span>` : ''}
+          </div>
+          ${vid.description ? `<p class="video-desc">${vid.description}</p>` : ''}
+          <div class="video-card-actions">
+            <a href="${vid.url}" target="_blank" rel="noopener noreferrer" class="btn-watch-fb">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              <span>Watch on Facebook</span>
+            </a>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
   function renderBioAndMembers() {
     const subtitleEl = document.getElementById('bioSectionSubtitle');
     const headlineEl = document.getElementById('bioSectionHeadline');
@@ -605,6 +693,13 @@
         if (data.setlist) SETLIST_DATA = data.setlist;
         if (data.bio) BIO_DATA = data.bio;
         if (data.members) MEMBERS_DATA = data.members;
+        if (data.videos) VIDEOS_DATA = data.videos;
+        
+        renderMediaSection();
+        renderAdminVideosList();
+        renderBioAndMembers();
+        renderShows();
+        renderSetlistCatalog();
         console.log("Successfully loaded dynamic data from data.json");
       }
     } catch (e) {
@@ -851,7 +946,7 @@
         card.className = `show-card ${isPast ? 'past-show-card' : ''}`;
         card.innerHTML = `
           <div class="show-card-poster-thumb" data-show-id="${show.id}">
-            <img src="${show.poster}" alt="${show.title} Official Poster" loading="lazy" class="show-poster-thumb-img" />
+            <img src="${show.poster || 'assets/banner.png'}" alt="${show.title} Official Poster" loading="lazy" class="show-poster-thumb-img" />
             <div class="poster-overlay-pill">${isPast ? 'View Poster &amp; Memories' : 'Click for Full Poster &amp; Details'}</div>
           </div>
           <div class="show-card-header">
