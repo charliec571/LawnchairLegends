@@ -47,8 +47,9 @@
 
       <nav class="desktop-nav" aria-label="Primary Navigation">
         <a href="#next-show" class="nav-link">Next Up</a>
-        <a href="#calendar" class="nav-link">Shows Calendar</a>
+        <a href="#calendar" class="nav-link">Shows</a>
         <a href="#vibe-check" class="nav-link">Band Bio</a>
+        <a href="#media" class="nav-link">Media</a>
         <a href="#setlist" class="nav-link">Setlist</a>
         <button id="headerLoginBtn" class="nav-link" style="background:none; border:none; cursor:pointer; font-family:inherit;">Band Login</button>
         <a href="#booking" class="nav-btn primary-btn">Book The Band</a>
@@ -366,6 +367,22 @@
               <span>Hi-Res Promo Kit</span>
             </button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE MEDIA & VIDEO FOOTAGE -->
+    <section class="section media-section" id="media">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">LIVE FOOTAGE &amp; CLIPS</div>
+          <h2 class="section-title">Watch The Legends Live</h2>
+          <p class="section-subtitle">Catch live gig highlights, horn-blasting rock solos, and crowd favorites direct from our Facebook page!</p>
+        </div>
+
+        <!-- Video Cards Grid -->
+        <div class="media-grid" id="mediaVideoGrid">
+          <!-- Dynamically Rendered by app.js -->
         </div>
       </div>
     </section>
@@ -936,6 +953,7 @@
           <button class="admin-tab-btn" data-tab="past">📜 Past Shows</button>
           <button class="admin-tab-btn" data-tab="setlist">🎵 Setlist Catalog</button>
           <button class="admin-tab-btn" data-tab="bio">📖 Bio &amp; Lineup</button>
+          <button class="admin-tab-btn" data-tab="videos">🎥 Video Clips</button>
           <button class="admin-tab-btn" data-tab="settings">⚙️ System Settings</button>
           
           <div style="margin-top: auto; padding: 0.5rem;">
@@ -1066,6 +1084,28 @@
                   <tbody id="adminMembersList"></tbody>
                 </table>
               </div>
+            </div>
+          </div>
+
+          <!-- Videos Tab -->
+          <div id="adminTabVideos" class="admin-tab-content hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+              <h4 style="margin: 0; font-size: 1.15rem; color: var(--text-parchment);">Live Video Clips &amp; Media</h4>
+              <button type="button" id="addNewVideoBtn" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.4rem 0.8rem;">➕ Add Video Link</button>
+            </div>
+
+            <div class="input-table-container">
+              <table class="tech-table admin-table" id="adminVideosTable">
+                <thead>
+                  <tr>
+                    <th>Video / Song Title</th>
+                    <th>Venue / Event</th>
+                    <th>Link / Platform</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminVideosList"></tbody>
+              </table>
             </div>
           </div>
 
@@ -1287,6 +1327,49 @@
         <div class="modal-actions" style="margin-top: 1rem;">
           <button type="submit" class="btn btn-primary">Save Member</button>
           <button type="button" class="btn btn-secondary" id="closeMemberFormBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. Video Form Editor Modal (Secondary overlay) -->
+  <div class="modal-backdrop hidden" id="videoFormModal" role="dialog" aria-modal="true" style="z-index: 11000;">
+    <div class="modal-card" style="max-width: 500px; width: 95%;">
+      <h3 class="modal-title" id="videoFormTitle">Add Live Video Link</h3>
+      
+      <form id="videoEditorForm" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+        <input type="hidden" id="videoFormId" />
+        
+        <div>
+          <label for="videoFormTitleInput" class="form-label">Video / Song Title</label>
+          <input type="text" id="videoFormTitleInput" class="form-input" placeholder="e.g. Vehicle (Live Highlight)" required />
+        </div>
+
+        <div>
+          <label for="videoFormUrl" class="form-label">Facebook Video / Reel URL</label>
+          <input type="url" id="videoFormUrl" class="form-input" placeholder="https://www.facebook.com/..." required />
+          <p style="font-size: 0.72rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">Paste any Facebook video, reel, or post link</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div>
+            <label for="videoFormVenue" class="form-label">Venue / Event</label>
+            <input type="text" id="videoFormVenue" class="form-input" placeholder="e.g. Electric Works Plaza" />
+          </div>
+          <div>
+            <label for="videoFormDate" class="form-label">Date / Season</label>
+            <input type="text" id="videoFormDate" class="form-input" placeholder="e.g. Summer 2026" />
+          </div>
+        </div>
+
+        <div>
+          <label for="videoFormDescription" class="form-label">Short Description (optional)</label>
+          <textarea id="videoFormDescription" class="form-input" rows="2" placeholder="e.g. Full brass section solo highlight..."></textarea>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 1rem;">
+          <button type="submit" class="btn btn-primary">Save Video</button>
+          <button type="button" class="btn btn-secondary" id="closeVideoFormBtn">Cancel</button>
         </div>
       </form>
     </div>

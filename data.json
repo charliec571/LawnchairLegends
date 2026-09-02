@@ -91,6 +91,33 @@
       "dtEnd": "20261121T220000",
       "startIso": "2026-11-21T19:00:00",
       "endIso": "2026-11-21T22:00:00"
+    },
+    {
+      "id": "show-1788235244796",
+      "title": "Lawnchair Legends at the Kendallville VFW",
+      "venue": "Kendallville VFW",
+      "address": "127 Veterans Way, Kendallville, IN 46755",
+      "region": "lakes",
+      "dateStr": "Saturday, Dec 12, 2026",
+      "dateMonth": "DEC",
+      "dateDay": "12",
+      "year": 2026,
+      "month": 11,
+      "day": 12,
+      "time": "7 to 10pm",
+      "admission": "Free",
+      "description": "",
+      "tags": [
+        "featured",
+        "free",
+        "all-ages",
+        "outdoor"
+      ],
+      "mapQuery": "127%20Veterans%20Way%2C%20Kendallville%2C%20IN%2046755",
+      "dtStart": "20261212T190000",
+      "dtEnd": "20261212T220000",
+      "startIso": "2026-12-12T19:00:00",
+      "endIso": "2026-12-12T22:00:00"
     }
   ],
   "pastShows": [
@@ -477,7 +504,25 @@
     {
       "name": "Evan Wilson",
       "role": "Saxophone",
-      "avatar": "\ud83c\udfb7"
+      "avatar": "🎷"
+    }
+  ],
+  "videos": [
+    {
+      "id": "vid-1",
+      "title": "Vehicle (Live Performance Highlight)",
+      "url": "https://www.facebook.com/profile.php?id=61585160237026",
+      "venue": "Live in Concert",
+      "date": "2026",
+      "description": "High-energy brass rock with full horn section live on stage!"
+    },
+    {
+      "id": "vid-2",
+      "title": "25 or 6 to 4 – Chicago Cover (Live)",
+      "url": "https://www.facebook.com/profile.php?id=61585160237026",
+      "venue": "Electric Works Festival Plaza",
+      "date": "Summer 2026",
+      "description": "Lawnchair Legends bringing down the house with classic rock anthems."
     }
   ]
 }
