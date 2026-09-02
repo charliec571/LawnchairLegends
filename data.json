@@ -12,9 +12,9 @@
       "year": 2026,
       "month": 8,
       "day": 6,
-      "time": "1:30 PM \u2013 3:00 PM",
+      "time": "1:30 PM – 3:00 PM",
       "type": "Annual Community Festival Main Stage",
-      "admission": "Free Admission \u2022 Family Friendly",
+      "admission": "Free Admission • Family Friendly",
       "parking": "Downtown Ligonier Public Parking & Street",
       "amenities": "Marshmallow bake-off & games, carnival rides, craft vendors, festival food trucks, lawn chair seating area.",
       "description": "Headline afternoon concert at the famous Ligonier Marshmallow Festival! Fold out your lawn chairs on the grass and enjoy an energetic 90-minute blast of rock classics, horn anthems, and family festival fun.",
@@ -44,7 +44,7 @@
       "year": 2026,
       "month": 8,
       "day": 26,
-      "time": "7:00 PM \u2013 10:00 PM",
+      "time": "7:00 PM – 10:00 PM",
       "type": "Historic Theater Concert Experience",
       "admission": "Reserved Seating & General Admission",
       "parking": "Community Learning Center (CLC) Campus Parking Lot",
@@ -67,26 +67,29 @@
     {
       "id": "show-1788235244795",
       "title": "Lawnchair Legends at Sylvan Cellars",
-      "venue": "Slvan Cellars",
+      "venue": "Sylvan Cellars",
       "address": "2725 E Northport Rd, Rome City, IN 46784",
       "region": "lakes",
       "dateStr": "Saturday, Nov 21, 2026",
       "dateMonth": "NOV",
       "dateDay": "21",
-      "time": "7 to 10pm",
-      "admission": "Free",
-      "description": "",
-      "poster": "assets/poster-sylvan-cellars.jpg",
       "year": 2026,
       "month": 10,
       "day": 21,
+      "time": "7 to 10pm",
+      "type": "Live Music Concert",
+      "admission": "Free",
+      "parking": "On-site parking",
+      "amenities": "Event Center, Craft Beer & Wine, Outdoor Lawn",
+      "description": "Join Lawnchair Legends live at Sylvan Cellars in Rome City for high-energy horn-infused rock hits!",
+      "poster": "assets/poster-sylvan-cellars.jpg",
       "tags": [
         "featured",
         "free",
         "all-ages",
         "outdoor"
       ],
-      "mapQuery": "2725%20E%20Northport%20Rd%2C%20Rome%20City%2C%20IN%2046784",
+      "isNextUp": false,
       "dtStart": "20261121T190000",
       "dtEnd": "20261121T220000",
       "startIso": "2026-11-21T19:00:00",
@@ -131,9 +134,9 @@
       "dateMonth": "JUL",
       "dateDay": "31",
       "year": 2026,
-      "time": "7:00 PM \u2013 9:00 PM",
+      "time": "7:00 PM – 9:00 PM",
       "type": "Motorcycle Showcase & Outdoor Stage",
-      "admission": "Free Admission \u2022 All Ages",
+      "admission": "Free Admission • All Ages",
       "description": "Massive summer evening on the brick plaza at Electric Works with custom motorcycle showcases, food trucks, craft beer, and roaring live horn rock anthems!",
       "poster": "assets/past-show-july-31-electric-works.jpg",
       "tags": [
@@ -154,9 +157,9 @@
       "dateMonth": "JUN",
       "dateDay": "05",
       "year": 2026,
-      "time": "7:00 PM \u2013 10:00 PM",
+      "time": "7:00 PM – 10:00 PM",
       "type": "Winery & Rustic Barn Concert",
-      "admission": "Free Entry \u2022 21+ Welcome",
+      "admission": "Free Entry • 21+ Welcome",
       "description": "Lawnchair Legends rocked the scenic lawn and historic timber barn at Sylvan Cellars in Rome City with lake country vibes, signature wine, and dance floor classics.",
       "poster": "assets/past-show-june-5-sylvan-cellars.jpg",
       "tags": [
@@ -176,9 +179,9 @@
       "dateMonth": "MAY",
       "dateDay": "30",
       "year": 2026,
-      "time": "5:00 PM \u2013 8:00 PM",
+      "time": "5:00 PM – 8:00 PM",
       "type": "Lakefront Jet Ski Festival",
-      "admission": "Free Admission \u2022 Family Friendly",
+      "admission": "Free Admission • Family Friendly",
       "description": "Post-race sunset concert immediately following the Great Lakes Watercross national jet ski races on the shores of Bixler Lake in Kendallville.",
       "poster": "assets/past-show-may-30-bixler-lake.jpg",
       "tags": [
@@ -199,7 +202,7 @@
       "dateMonth": "MAY",
       "dateDay": "02",
       "year": 2026,
-      "time": "8:00 PM \u2013 11:00 PM",
+      "time": "8:00 PM – 11:00 PM",
       "type": "Hometown Club Party",
       "admission": "Members & Guests Welcome",
       "description": "Spring weekend party at the Kendallville Elks Lodge featuring high-energy sets of horn-fueled party hits, classic rock, and 90s sing-alongs.",
@@ -221,7 +224,7 @@
       "dateMonth": "FEB",
       "dateDay": "20",
       "year": 2026,
-      "time": "8:00 PM \u2013 11:00 PM",
+      "time": "8:00 PM – 11:00 PM",
       "type": "Winter Dance Showcase",
       "admission": "Members & Guests Welcome",
       "description": "Packed winter party warming up Kendallville with 3 full sets of live music, horn solos, and rock classics at the Elks Lodge on Weston Ave.",
@@ -235,7 +238,7 @@
   ],
   "setlist": [
     {
-      "title": "Waitin\u2019 On the Bus / Jesus Left Chicago",
+      "title": "Waitin’ On the Bus / Jesus Left Chicago",
       "artist": "ZZ Top",
       "sangBy": "Adam",
       "genre": "Blues Rock",
@@ -249,14 +252,14 @@
       "category": "blues"
     },
     {
-      "title": "Don\u2019t Do Me Like That",
+      "title": "Don’t Do Me Like That",
       "artist": "Tom Petty and the Heartbreakers",
       "sangBy": "Adam",
       "genre": "Heartland Rock",
       "category": "rock"
     },
     {
-      "title": "Stop Draggin\u2019 My Heart Around",
+      "title": "Stop Draggin’ My Heart Around",
       "artist": "Stevie Nicks & Tom Petty",
       "sangBy": "Meg (ft. Adam)",
       "genre": "Classic Rock",
@@ -460,46 +463,46 @@
     }
   ],
   "bio": {
-    "headline": "Lawnchair Legends",
-    "subtitle": "Proudly from Noble County, Indiana \u2014 bringing hometown talent, great energy, and a whole lot of music to every stage.",
-    "quote": "\"Proudly from Noble County, Indiana \u2014 the Lawnchair Legends bring hometown talent, great energy, and a whole lot of music to every stage.\"",
+    "headline": "Lawn Chair Legends",
+    "subtitle": "Proudly from Noble County, Indiana — bringing hometown talent, great energy, and a whole lot of music to every stage.",
+    "quote": "\"Proudly from Noble County, Indiana — the Lawn Chair Legends bring hometown talent, great energy, and a whole lot of music to every stage.\"",
     "paragraphs": [
-      "Formed in 2025, the <strong>Lawnchair Legends</strong> are a hometown band with deep roots in <strong>Noble County, Indiana</strong>. Made up entirely of Noble County natives, the band members share a passion for music, community, and creating memorable experiences through live performances.",
-      "The Lawnchair Legends feature <strong>Chris Dafforn</strong> on keys and trumpet, <strong>Mike Kugler</strong> on guitar, <strong>Adam Kugler</strong> on bass, <strong>Drew Mark</strong> on drums, <strong>Meg Rainey</strong> on vocals, <strong>Andrew Wilson</strong> on trumpet, and <strong>Evan Wilson</strong> on saxophone. Together, this talented group brings a full, dynamic sound that blends powerful vocals, a driving rhythm section, and the energy of a live horn section.",
-      "The band's music spans classic rock, country, blues, and crowd-favorite hits, delivering a mix of songs that appeal to a wide variety of audiences. Whether it's a community celebration, festival, private event, or local gathering, the Lawnchair Legends bring the perfect combination of talent, fun, and hometown spirit.",
-      "More than just a band, the Lawnchair Legends are a group of friends and neighbors proud to represent the community that raised them. Their goal is simple: play great music, bring people together, and create an unforgettable experience for everyone in the crowd."
+      "Formed in 2025, the <strong>Lawn Chair Legends</strong> are a hometown band with deep roots in <strong>Noble County, Indiana</strong>. Made up entirely of Noble County natives, the band members share a passion for music, community, and creating memorable experiences through live performances.",
+      "The Lawn Chair Legends feature <strong>Chris Dafforn</strong> on keys and trumpet, <strong>Mike Kugler</strong> on guitar, <strong>Adam Kugler</strong> on bass, <strong>Drew Mark</strong> on drums, <strong>Meg Rainey</strong> on vocals, <strong>Andrew Wilson</strong> on trumpet, and <strong>Evan Wilson</strong> on saxophone. Together, this talented group brings a full, dynamic sound that blends powerful vocals, a driving rhythm section, and the energy of a live horn section.",
+      "The band's music spans classic rock, country, blues, and crowd-favorite hits, delivering a mix of songs that appeal to a wide variety of audiences. Whether it's a community celebration, festival, private event, or local gathering, the Lawn Chair Legends bring the perfect combination of talent, fun, and hometown spirit.",
+      "More than just a band, the Lawn Chair Legends are a group of friends and neighbors proud to represent the community that raised them. Their goal is simple: play great music, bring people together, and create an unforgettable experience for everyone in the crowd."
     ]
   },
   "members": [
     {
       "name": "Meg Rainey",
       "role": "Lead Vocals",
-      "avatar": "\ud83c\udfa4"
+      "avatar": "🎤"
     },
     {
       "name": "Chris Dafforn",
       "role": "Keys & Trumpet & Vocals",
-      "avatar": "\ud83c\udfb9 \ud83c\udfba"
+      "avatar": "🎹 🎺"
     },
     {
       "name": "Mike Kugler",
       "role": "Guitar & Vocals",
-      "avatar": "\ud83c\udfb8"
+      "avatar": "🎸"
     },
     {
       "name": "Adam Kugler",
       "role": "Bass & Vocals",
-      "avatar": "\ud83c\udfb8"
+      "avatar": "🎸"
     },
     {
       "name": "Drew Mark",
       "role": "Drums & Vocals",
-      "avatar": "\ud83e\udd41"
+      "avatar": "🥁"
     },
     {
       "name": "Andrew Wilson",
       "role": "Trumpet",
-      "avatar": "\ud83c\udfba"
+      "avatar": "🎺"
     },
     {
       "name": "Evan Wilson",
