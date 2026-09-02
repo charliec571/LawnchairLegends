@@ -107,9 +107,10 @@
       "year": 2026,
       "month": 11,
       "day": 12,
-      "time": "7 to 10pm",
+      "time": "8 PM to 11 PM",
       "admission": "Free",
-      "description": "",
+      "description": "Supporting Our Troops! Come out for a live concert at the Kendallville VFW supporting our veterans community.",
+      "poster": "assets/poster-vfw-dec12.jpg",
       "tags": [
         "featured",
         "free",
