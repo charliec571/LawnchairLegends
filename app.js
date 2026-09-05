@@ -1625,7 +1625,7 @@
       posterImg.alt = `${show.title} Official Concert Poster`;
     }
 
-    document.getElementById('modalShowType').textContent = (isPast ? '🏁 PAST CONCERT ARCHIVE • ' : '') + show.type.toUpperCase();
+    document.getElementById('modalShowType').textContent = (isPast ? '🏁 PAST CONCERT ARCHIVE • ' : '') + (show.type || 'Live Music Concert').toUpperCase();
     document.getElementById('modalVenueTitle').textContent = show.title;
     document.getElementById('modalDateTime').textContent = `${show.dateStr} • ${show.time}`;
     document.getElementById('modalLocation').textContent = `${show.venue}, ${show.address}`;
@@ -1637,7 +1637,7 @@
       amenitiesEl.textContent = parts.length > 0 ? parts.join(' • ') : 'Full Ensemble Live Performance with Horn Section';
     }
 
-    document.getElementById('modalDescription').textContent = show.description;
+    document.getElementById('modalDescription').textContent = show.description || '';
 
     const mapBtn = document.getElementById('modalMapBtn');
     if (mapBtn) mapBtn.href = `https://maps.apple.com/?q=${show.mapQuery}`;
